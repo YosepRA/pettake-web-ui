@@ -10,7 +10,11 @@ import Link from '@mui/material/Link';
 
 const PetCard = function PetCardComponent() {
   return (
-    <Link to="/pet/123" component={RouterLink} sx={{ textDecoration: 'none' }}>
+    <Link
+      to="/pet/123"
+      component={RouterLink}
+      sx={{ display: 'flex', justifyContent: 'center', textDecoration: 'none' }}
+    >
       <Card sx={{ maxWidth: 345 }}>
         <CardMedia
           sx={{ height: 140 }}
