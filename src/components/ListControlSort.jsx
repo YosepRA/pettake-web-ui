@@ -3,8 +3,27 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import Popover from '@mui/material/Popover';
 import Box from '@mui/material/Box';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
 
-const ListControlSort = function ListControlSortComponent() {
+const sort = [
+  {
+    id: 'latest',
+    value: '-createdAt',
+    label: 'Latest',
+  },
+  {
+    id: 'oldest',
+    value: 'createdAt',
+    label: 'Oldest',
+  },
+];
+
+const ListControlSort = function ListControlSortComponent({
+  values,
+  handleSubmit,
+  setFieldValue,
+}) {
   const [sortAnchorEl, setSortAnchorEl] = useState(null);
 
   const handleSortClick = (event) => {
@@ -12,6 +31,12 @@ const ListControlSort = function ListControlSortComponent() {
   };
 
   const handleSortClose = () => {
+    setSortAnchorEl(null);
+  };
+
+  const handleMenuItemClick = (value) => {
+    setFieldValue('sort', value);
+    handleSubmit();
     setSortAnchorEl(null);
   };
 
@@ -24,7 +49,7 @@ const ListControlSort = function ListControlSortComponent() {
         Sort
       </Button>
 
-      <Popover
+      <Menu
         id={sortId}
         open={sortOpen}
         anchorEl={sortAnchorEl}
@@ -33,11 +58,25 @@ const ListControlSort = function ListControlSortComponent() {
           vertical: 'bottom',
           horizontal: 'left',
         }}
+        sx={{
+          '& .MuiMenu-paper': {
+            width: 200,
+          },
+        }}
       >
-        <Box sx={{ px: 2, py: 1 }}>
-          <Typography>Sort popover</Typography>
-        </Box>
-      </Popover>
+        <MenuItem
+          selected={values.sort === '-createdAt'}
+          onClick={() => handleMenuItemClick('-createdAt')}
+        >
+          Latest
+        </MenuItem>
+        <MenuItem
+          selected={values.sort === 'createdAt'}
+          onClick={() => handleMenuItemClick('createdAt')}
+        >
+          Oldest
+        </MenuItem>
+      </Menu>
     </>
   );
 };
