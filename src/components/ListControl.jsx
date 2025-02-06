@@ -14,7 +14,7 @@ const initialValues = {
   preferHomeWith: [],
   preferHomeWithout: [],
   health: [],
-  sort: '',
+  sort: '-createdAt',
 };
 
 const ListControl = function ListControlComponent() {
@@ -26,7 +26,7 @@ const ListControl = function ListControlComponent() {
 
   return (
     <Formik initialValues={initialValues} onSubmit={handleFormSubmit}>
-      {({ values, handleChange, handleSubmit }) => (
+      {({ values, handleChange, handleSubmit, setFieldValue }) => (
         <Form>
           <Stack direction="row" spacing={1} sx={{ mb: 2 }}>
             <ListControlFilter
@@ -35,7 +35,11 @@ const ListControl = function ListControlComponent() {
               handleSubmit={handleSubmit}
             />
 
-            <ListControlSort values={values} handleSubmit={handleSubmit} />
+            <ListControlSort
+              values={values}
+              handleSubmit={handleSubmit}
+              setFieldValue={setFieldValue}
+            />
           </Stack>
         </Form>
       )}
