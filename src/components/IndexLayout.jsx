@@ -14,7 +14,7 @@ const IndexLayout = function IndexLayoutComponent() {
       <Box
         component="main"
         className="main-container"
-        sx={{ minHight: 'calc(100vh - 100px)' }}
+        sx={{ minHeight: 'calc(100vh - 100px)' }}
       >
         <Outlet />
       </Box>
