@@ -118,6 +118,7 @@ const ListControlFilter = function ListControlFilterComponent({
         sx={{
           '& .MuiPopover-paper': {
             width: 1,
+            maxHeight: 360,
           },
         }}
       >
@@ -160,7 +161,7 @@ const ListControlFilter = function ListControlFilterComponent({
           </FormControl>
 
           <FormControl fullWidth>
-            <InputLabel id="gender">Gender`</InputLabel>
+            <InputLabel id="gender">Gender</InputLabel>
             <Select
               labelId="gender"
               id="gender"

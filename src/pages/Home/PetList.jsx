@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useSearchParams } from 'react-router';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
@@ -9,6 +10,21 @@ import PetCard from '@Components/PetCard.jsx';
 import Pagination from '@Components/Pagination.jsx';
 
 const PetList = function PetListComponent() {
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  // useEffect(() => {
+  //   if (searchParams.size === 0) return undefined;
+
+  //   for (const [key, value] of searchParams.entries()) {
+  //     console.log('🚀 ~ useEffect ~ key:', key);
+  //     console.log('🚀 ~ useEffect ~ value:', value);
+  //   }
+
+  //   console.log('Load data...');
+
+  //   return undefined;
+  // }, [searchParams]);
+
   return (
     <Box component="section" className="pet-list">
       <Container>
@@ -34,7 +50,10 @@ const PetList = function PetListComponent() {
           </Grid>
         </Grid>
 
-        <Pagination />
+        <Pagination
+          page={parseInt(searchParams.get('page'), 10)}
+          totalPages={23}
+        />
       </Container>
     </Box>
   );

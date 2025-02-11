@@ -1,10 +1,23 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useSearchParams } from 'react-router';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 
 import PetList from './PetList.jsx';
 
 const Home = function HomeComponent() {
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  useEffect(() => {
+    if (!searchParams.has('page')) {
+      const defaultPageParams = { page: 1 };
+
+      setSearchParams(defaultPageParams);
+    }
+
+    return undefined;
+  }, [searchParams, setSearchParams]);
+
   return (
     <>
       <Box
