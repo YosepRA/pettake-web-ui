@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react';
-import { useSearchParams } from 'react-router';
+import { useSearchParams, Link as RouterLink } from 'react-router';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid2';
+import Link from '@mui/material/Link';
 
 import ListControl from '@Components/ListControl.jsx';
 import PetCard from '@Components/PetCard.jsx';
@@ -36,17 +37,49 @@ const PetList = function PetListComponent() {
           Find Your Pet
         </Typography>
 
-        <ListControl />
+        <Box sx={{ mb: 1 }}>
+          <ListControl />
+        </Box>
 
         <Grid container spacing={2} sx={{ mb: 3 }}>
           <Grid size={{ xs: 12 }}>
-            <PetCard />
+            <Link
+              to="/pet/123"
+              component={RouterLink}
+              sx={{
+                display: 'flex',
+                justifyContent: 'center',
+                textDecoration: 'none',
+              }}
+            >
+              <PetCard />
+            </Link>
           </Grid>
           <Grid size={{ xs: 12 }}>
-            <PetCard />
+            <Link
+              to="/pet/123"
+              component={RouterLink}
+              sx={{
+                display: 'flex',
+                justifyContent: 'center',
+                textDecoration: 'none',
+              }}
+            >
+              <PetCard />
+            </Link>
           </Grid>
           <Grid size={{ xs: 12 }}>
-            <PetCard />
+            <Link
+              to="/pet/123"
+              component={RouterLink}
+              sx={{
+                display: 'flex',
+                justifyContent: 'center',
+                textDecoration: 'none',
+              }}
+            >
+              <PetCard />
+            </Link>
           </Grid>
         </Grid>
 

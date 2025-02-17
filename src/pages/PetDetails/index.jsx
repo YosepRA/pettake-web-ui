@@ -4,20 +4,76 @@ import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid2';
 import Stack from '@mui/material/Stack';
-import { grey } from '@mui/material/colors';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Pagination } from 'swiper/modules';
+
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
 
 const PetDetails = function PetDetailsComponent() {
   return (
     <Container sx={{ pt: 2 }}>
       <Box
-        sx={{
-          width: 1,
-          height: 220,
+        component={Swiper}
+        modules={[Pagination]}
+        spaceBetween={50}
+        slidesPerView={1}
+        pagination
+        tag="section"
+        sx={(theme) => ({
           mb: 2,
-          borderRadius: 1,
-          bgcolor: grey[300],
-        }}
-      />
+          '--swiper-pagination-color': theme.palette.primary.main,
+        })}
+      >
+        <SwiperSlide>
+          <Box
+            sx={{
+              width: 1,
+              height: 200,
+              borderRadius: 1,
+            }}
+          >
+            <Box
+              component="img"
+              src="https://i.ibb.co.com/GfN2FV4M/pauline-loroy-U3a-F7hg-USrk-unsplash.jpg"
+              alt="Michi"
+              sx={{ width: 1, height: 1, objectFit: 'cover' }}
+            />
+          </Box>
+        </SwiperSlide>
+        <SwiperSlide>
+          <Box
+            sx={{
+              width: 1,
+              height: 200,
+              borderRadius: 1,
+            }}
+          >
+            <Box
+              component="img"
+              src="https://i.ibb.co.com/GfN2FV4M/pauline-loroy-U3a-F7hg-USrk-unsplash.jpg"
+              alt="Michi"
+              sx={{ width: 1, height: 1, objectFit: 'cover' }}
+            />
+          </Box>
+        </SwiperSlide>
+        <SwiperSlide>
+          <Box
+            sx={{
+              width: 1,
+              height: 200,
+              borderRadius: 1,
+            }}
+          >
+            <Box
+              component="img"
+              src="https://i.ibb.co.com/GfN2FV4M/pauline-loroy-U3a-F7hg-USrk-unsplash.jpg"
+              alt="Michi"
+              sx={{ width: 1, height: 1, objectFit: 'cover' }}
+            />
+          </Box>
+        </SwiperSlide>
+      </Box>
 
       <Grid container rowSpacing={{ xs: 2 }}>
         <Grid size={{ xs: 12 }}>
