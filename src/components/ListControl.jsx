@@ -73,7 +73,7 @@ const ListControl = function ListControlComponent() {
     >
       {({ values, handleChange, handleSubmit, setFieldValue }) => (
         <Form>
-          <Stack direction="row" spacing={1} sx={{ mb: 2 }}>
+          <Stack direction="row" spacing={1}>
             <ListControlFilter
               values={values}
               handleChange={handleChange}

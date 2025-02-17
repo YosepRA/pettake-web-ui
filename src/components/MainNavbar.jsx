@@ -33,19 +33,11 @@ const MainNavbar = function MainNavbarComponent() {
             }}
           >
             <Link
-              to="/"
+              to="/user"
               component={RouterLink}
               sx={{ color: 'inherit', textDecoration: 'none' }}
             >
-              <Typography>Home</Typography>
-            </Link>
-
-            <Link
-              to="/pet/123"
-              component={RouterLink}
-              sx={{ color: 'inherit', textDecoration: 'none' }}
-            >
-              <Typography>Pet</Typography>
+              <Typography>User</Typography>
             </Link>
           </Box>
         </Toolbar>
