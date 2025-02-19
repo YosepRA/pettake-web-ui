@@ -4,8 +4,16 @@ function uploadImages(fileList) {
   const result = [];
 
   for (const file of fileList) {
-    console.log('🚀 ~ uploadImages ~ file:', file);
+    const uniquePrefix = Math.random().toString(16).slice(2);
+    const imageData = {
+      publicId: `PetTake/${uniquePrefix}-${file.name}`,
+      url: `https://www.picturelink.com/${uniquePrefix}-${file.name}`,
+    };
+
+    result.push(imageData);
   }
+
+  return result;
 }
 
 export default uploadImages;
