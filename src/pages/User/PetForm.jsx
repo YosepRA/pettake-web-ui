@@ -1,9 +1,10 @@
 import React from 'react';
-import { useParams } from 'react-router';
+import { useParams, useLocation } from 'react-router';
 import { Formik, Form } from 'formik';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Stack from '@mui/material/Stack';
+import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import FormControl from '@mui/material/FormControl';
@@ -13,8 +14,9 @@ import FormLabel from '@mui/material/FormLabel';
 import FormGroup from '@mui/material/FormGroup';
 
 import { petInputData } from '@Data/index.js';
-import { petFormHelpers, uploadImages } from '@Features/pet/utils/index.js';
-import VisuallyHiddenInput from '@Components/styled/VisuallyHiddenInput.jsx';
+import { petFormHelpers } from '@Features/pet/utils/index.js';
+
+import PetFormImageInput from './PetFormImageInput.jsx';
 
 const defaultValues = {
   name: '',
@@ -31,13 +33,8 @@ const defaultValues = {
 
 const PetForm = function PetFormComponent() {
   const { id } = useParams();
-
-  const handleImageInputChange = (event) => {
-    // Upload images to server.
-    uploadImages(event.target.files);
-
-    // Update form state to include the returned upload data.
-  };
+  const location = useLocation();
+  const editPathPattern = /\/user\/pet\/\w+\/edit/;
 
   const handleFormSubmit = (values) => {
     console.log(JSON.stringify(values, null, 2));
@@ -58,11 +55,11 @@ const PetForm = function PetFormComponent() {
         component="h1"
         sx={{ mb: 2, textAlign: 'center' }}
       >
-        Create New Pet
+        {location.pathname.match(editPathPattern) ? 'Edit Pet' : 'Create Pet'}
       </Typography>
 
       <Formik initialValues={defaultValues} onSubmit={handleFormSubmit}>
-        {({ values, handleChange, handleSubmit }) => (
+        {({ values, handleChange, setFieldValue, handleSubmit }) => (
           <Form onSubmit={handleSubmit}>
             <Stack direction="column" alignItems="stretch" rowGap={2}>
               <TextField
@@ -167,22 +164,13 @@ const PetForm = function PetFormComponent() {
                 </FormGroup>
               </FormControl>
 
-              <Button
-                component="label"
-                role={undefined}
-                variant="contained"
-                tabIndex={-1}
-              >
-                Upload Images
-                <VisuallyHiddenInput
-                  type="file"
-                  onChange={handleImageInputChange}
-                  multiple
-                />
-              </Button>
+              <PetFormImageInput
+                images={values.images}
+                setFieldValue={setFieldValue}
+              />
 
               <Button type="submit" variant="contained" color="primary">
-                Create
+                {location.pathname.match(editPathPattern) ? 'Save' : 'Create'}
               </Button>
             </Stack>
           </Form>

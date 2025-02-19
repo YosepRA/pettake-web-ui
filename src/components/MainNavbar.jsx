@@ -39,6 +39,13 @@ const MainNavbar = function MainNavbarComponent() {
             >
               <Typography>User</Typography>
             </Link>
+            <Link
+              to="/user/settings"
+              component={RouterLink}
+              sx={{ color: 'inherit', textDecoration: 'none' }}
+            >
+              <Typography>Settings</Typography>
+            </Link>
           </Box>
         </Toolbar>
       </AppBar>
