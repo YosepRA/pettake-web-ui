@@ -8,6 +8,8 @@ import PetDetails from '@Pages/PetDetails/index.jsx';
 import UserPetList from '@Pages/User/PetList/index.jsx';
 import UserSettings from '@Pages/User/Settings/index.jsx';
 import PetForm from '@Pages/User/PetForm.jsx';
+import Login from '@Pages/User/Login/index.jsx';
+import Register from '@Pages/User/Register/index.jsx';
 
 import '@fontsource/roboto';
 import '@fontsource/comfortaa/400.css';
@@ -36,6 +38,9 @@ const App = function AppComponent() {
                 <Route path=":id/edit" element={<PetForm />} />
               </Route>
               <Route path="settings" element={<UserSettings />} />
+
+              <Route path="login" element={<Login />} />
+              <Route path="register" element={<Register />} />
             </Route>
 
             <Route path="*" element={<Navigate to="/" />} />
