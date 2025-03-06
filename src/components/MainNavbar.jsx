@@ -5,12 +5,15 @@ import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Link from '@mui/material/Link';
+import Button from '@mui/material/Button';
+
+import MobileNavDrawer from './MobileNavDrawer.jsx';
 
 const MainNavbar = function MainNavbarComponent() {
   return (
     <Box component="nav">
       <AppBar position="static">
-        <Toolbar sx={{ columnGap: 2 }}>
+        <Toolbar sx={{ columnGap: 2, justifyContent: 'space-between' }}>
           <Link to="/" component={RouterLink}>
             <Typography
               variant="h6"
@@ -21,7 +24,7 @@ const MainNavbar = function MainNavbarComponent() {
             </Typography>
           </Link>
 
-          <Box
+          {/* <Box
             sx={{
               '& .MuiTypography-root': {
                 display: 'inline-block',
@@ -46,7 +49,9 @@ const MainNavbar = function MainNavbarComponent() {
             >
               <Typography>Settings</Typography>
             </Link>
-          </Box>
+          </Box> */}
+
+          <MobileNavDrawer />
         </Toolbar>
       </AppBar>
     </Box>
