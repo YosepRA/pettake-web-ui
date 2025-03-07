@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router';
 import CssBaseline from '@mui/material/CssBaseline';
 
 import IndexLayout from '@Components/IndexLayout.jsx';
+import AuthLayout from '@Components/AuthLayout.jsx';
 import Home from '@Pages/Home/index.jsx';
 import PetDetails from '@Pages/PetDetails/index.jsx';
 import UserPetList from '@Pages/User/PetList/index.jsx';
@@ -28,7 +29,7 @@ const App = function AppComponent() {
 
             <Route path="pet/:id" element={<PetDetails />} />
 
-            <Route path="user">
+            <Route path="user" element={<AuthLayout />}>
               <Route index element={<Navigate to="/user/pet" />} />
 
               <Route path="pet">
@@ -38,7 +39,9 @@ const App = function AppComponent() {
                 <Route path=":id/edit" element={<PetForm />} />
               </Route>
               <Route path="settings" element={<UserSettings />} />
+            </Route>
 
+            <Route path="user">
               <Route path="login" element={<Login />} />
               <Route path="register" element={<Register />} />
             </Route>
