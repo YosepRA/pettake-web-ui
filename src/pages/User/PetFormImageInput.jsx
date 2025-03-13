@@ -3,7 +3,7 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 
-import { uploadImages } from '@Features/pet/utils/index.js';
+import pet from '@Features/pet/index.js';
 import VisuallyHiddenInput from '@Components/styled/VisuallyHiddenInput.jsx';
 
 const PetFormImageInput = function PetFormImageInputComponent({
@@ -12,7 +12,7 @@ const PetFormImageInput = function PetFormImageInputComponent({
 }) {
   const handleChange = (event) => {
     // Upload images to server.
-    const uploadResult = uploadImages(event.target.files);
+    const uploadResult = pet.utils.uploadImages(event.target.files);
 
     // Update form state to include the returned upload data.
     setFieldValue('images', images.concat(uploadResult));

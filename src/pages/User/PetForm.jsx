@@ -14,7 +14,7 @@ import FormLabel from '@mui/material/FormLabel';
 import FormGroup from '@mui/material/FormGroup';
 
 import { petInputData } from '@Data/index.js';
-import { petFormHelpers } from '@Features/pet/utils/index.js';
+import pet from '@Features/pet/index.js';
 
 import PetFormImageInput from './PetFormImageInput.jsx';
 
@@ -40,11 +40,13 @@ const PetForm = function PetFormComponent() {
     console.log(JSON.stringify(values, null, 2));
   };
 
-  const ageOptions = petFormHelpers.createSelectOptions(petInputData.ages);
-  const genderOptions = petFormHelpers.createSelectOptions(
+  const ageOptions = pet.utils.pet.utils.petFormHelpers.createSelectOptions(
+    petInputData.ages,
+  );
+  const genderOptions = pet.utils.petFormHelpers.createSelectOptions(
     petInputData.genders,
   );
-  const coatLengthOptions = petFormHelpers.createSelectOptions(
+  const coatLengthOptions = pet.utils.petFormHelpers.createSelectOptions(
     petInputData.coatLengths,
   );
 
@@ -129,7 +131,7 @@ const PetForm = function PetFormComponent() {
                 <FormLabel component="legend">Prefer Home With</FormLabel>
 
                 <FormGroup>
-                  {petFormHelpers.createMultipleCheckboxInput(
+                  {pet.utils.petFormHelpers.createMultipleCheckboxInput(
                     petInputData.preferHomes,
                     'preferHomeWith',
                     values.preferHomeWith,
@@ -142,7 +144,7 @@ const PetForm = function PetFormComponent() {
                 <FormLabel component="legend">Prefer Home Without</FormLabel>
 
                 <FormGroup>
-                  {petFormHelpers.createMultipleCheckboxInput(
+                  {pet.utils.petFormHelpers.createMultipleCheckboxInput(
                     petInputData.preferHomes,
                     'preferHomeWithout',
                     values.preferHomeWithout,
@@ -155,7 +157,7 @@ const PetForm = function PetFormComponent() {
                 <FormLabel component="legend">Health</FormLabel>
 
                 <FormGroup>
-                  {petFormHelpers.createMultipleCheckboxInput(
+                  {pet.utils.petFormHelpers.createMultipleCheckboxInput(
                     petInputData.healths,
                     'health',
                     values.health,

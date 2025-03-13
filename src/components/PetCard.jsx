@@ -8,21 +8,20 @@ import CardActions from '@mui/material/CardActions';
 import Button from '@mui/material/Button';
 import Link from '@mui/material/Link';
 
-const PetCard = function PetCardComponent() {
+const PetCard = function PetCardComponent({ pet }) {
   return (
     <Card sx={{ maxWidth: 345 }}>
       <CardMedia
         sx={{ height: 140 }}
-        image="https://i.ibb.co.com/GfN2FV4M/pauline-loroy-U3a-F7hg-USrk-unsplash.jpg"
-        title="green iguana"
+        image={pet.images[0].url}
+        title={pet.name}
       />
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
-          Doggo
+          {pet.name}
         </Typography>
         <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nobis cumque
-          quas repudiandae fugit ratione sequi.
+          {pet.description}
         </Typography>
       </CardContent>
       <CardActions>
