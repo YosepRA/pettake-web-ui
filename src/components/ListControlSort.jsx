@@ -64,18 +64,15 @@ const ListControlSort = function ListControlSortComponent({
           },
         }}
       >
-        <MenuItem
-          selected={values.sort === '-createdAt'}
-          onClick={() => handleMenuItemClick('-createdAt')}
-        >
-          Latest
-        </MenuItem>
-        <MenuItem
-          selected={values.sort === 'createdAt'}
-          onClick={() => handleMenuItemClick('createdAt')}
-        >
-          Oldest
-        </MenuItem>
+        {sort.map((sortKey) => (
+          <MenuItem
+            key={sortKey.id}
+            selected={values.sort === sortKey.value}
+            onClick={() => handleMenuItemClick(sortKey.value)}
+          >
+            {sortKey.label}
+          </MenuItem>
+        ))}
       </Menu>
     </>
   );

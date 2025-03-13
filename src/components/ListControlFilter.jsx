@@ -15,7 +15,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 
 import { petInputData } from '@Data/index.js';
-import { petFormHelpers } from '@Features/pet/utils/index.js';
+import pet from '@Features/pet/index.js';
 
 const ListControlFilter = function ListControlFilterComponent({
   values,
@@ -40,28 +40,34 @@ const ListControlFilter = function ListControlFilterComponent({
   const filterOpen = Boolean(filterAnchorEl);
   const filterId = filterOpen ? 'filter' : undefined;
 
-  const breedOptions = petFormHelpers.createSelectOptions(petInputData.breeds);
-  const ageOptions = petFormHelpers.createSelectOptions(petInputData.ages);
-  const genderOptions = petFormHelpers.createSelectOptions(
+  const breedOptions = pet.utils.petFormHelpers.createSelectOptions(
+    petInputData.breeds,
+  );
+  const ageOptions = pet.utils.petFormHelpers.createSelectOptions(
+    petInputData.ages,
+  );
+  const genderOptions = pet.utils.petFormHelpers.createSelectOptions(
     petInputData.genders,
   );
-  const coatLengthOptions = petFormHelpers.createSelectOptions(
+  const coatLengthOptions = pet.utils.petFormHelpers.createSelectOptions(
     petInputData.coatLengths,
   );
 
-  const preferHomeWithOptions = petFormHelpers.createMultipleCheckboxInput(
-    petInputData.preferHomes,
-    'preferHomeWith',
-    values.preferHomeWith,
-    handleChange,
-  );
-  const preferHomeWithoutOptions = petFormHelpers.createMultipleCheckboxInput(
-    petInputData.preferHomes,
-    'preferHomeWithout',
-    values.preferHomeWithout,
-    handleChange,
-  );
-  const healthOptions = petFormHelpers.createMultipleCheckboxInput(
+  const preferHomeWithOptions =
+    pet.utils.petFormHelpers.createMultipleCheckboxInput(
+      petInputData.preferHomes,
+      'preferHomeWith',
+      values.preferHomeWith,
+      handleChange,
+    );
+  const preferHomeWithoutOptions =
+    pet.utils.petFormHelpers.createMultipleCheckboxInput(
+      petInputData.preferHomes,
+      'preferHomeWithout',
+      values.preferHomeWithout,
+      handleChange,
+    );
+  const healthOptions = pet.utils.petFormHelpers.createMultipleCheckboxInput(
     petInputData.healths,
     'health',
     values.health,

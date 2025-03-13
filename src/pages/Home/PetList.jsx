@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { useQuery } from '@apollo/Client';
 import { useSearchParams, Link as RouterLink } from 'react-router';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
@@ -6,25 +7,29 @@ import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid2';
 import Link from '@mui/material/Link';
 
+import pet from '@Features/pet/index.js';
 import ListControl from '@Components/ListControl.jsx';
 import PetCard from '@Components/PetCard.jsx';
 import Pagination from '@Components/Pagination.jsx';
 
+const {
+  graphql: { queries },
+} = pet;
+
 const PetList = function PetListComponent() {
   const [searchParams, setSearchParams] = useSearchParams();
 
-  // useEffect(() => {
-  //   if (searchParams.size === 0) return undefined;
+  const { data, loading, error } = useQuery(queries.GET_PET_LIST, {
+    variables: {
+      page: searchParams.get('page')
+        ? parseInt(searchParams.get('page'), 10)
+        : 1,
+      sort: searchParams.get('sort') || '-createdAt',
+    },
+  });
 
-  //   for (const [key, value] of searchParams.entries()) {
-  //     console.log('🚀 ~ useEffect ~ key:', key);
-  //     console.log('🚀 ~ useEffect ~ value:', value);
-  //   }
-
-  //   console.log('Load data...');
-
-  //   return undefined;
-  // }, [searchParams]);
+  if (loading) return <Typography>Loading...</Typography>;
+  if (error) return <Typography>An error has occurred.</Typography>;
 
   return (
     <Box component="section" className="pet-list">
@@ -42,50 +47,26 @@ const PetList = function PetListComponent() {
         </Box>
 
         <Grid container spacing={2} sx={{ mb: 3 }}>
-          <Grid size={{ xs: 12 }}>
-            <Link
-              to="/pet/123"
-              component={RouterLink}
-              sx={{
-                display: 'flex',
-                justifyContent: 'center',
-                textDecoration: 'none',
-              }}
-            >
-              <PetCard />
-            </Link>
-          </Grid>
-          <Grid size={{ xs: 12 }}>
-            <Link
-              to="/pet/123"
-              component={RouterLink}
-              sx={{
-                display: 'flex',
-                justifyContent: 'center',
-                textDecoration: 'none',
-              }}
-            >
-              <PetCard />
-            </Link>
-          </Grid>
-          <Grid size={{ xs: 12 }}>
-            <Link
-              to="/pet/123"
-              component={RouterLink}
-              sx={{
-                display: 'flex',
-                justifyContent: 'center',
-                textDecoration: 'none',
-              }}
-            >
-              <PetCard />
-            </Link>
-          </Grid>
+          {data.petList?.docs.map((pet) => (
+            <Grid key={pet._id} size={{ xs: 12 }}>
+              <Link
+                to={`/pet/${pet._id}`}
+                component={RouterLink}
+                sx={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  textDecoration: 'none',
+                }}
+              >
+                <PetCard pet={pet} />
+              </Link>
+            </Grid>
+          ))}
         </Grid>
 
         <Pagination
           page={parseInt(searchParams.get('page'), 10)}
-          totalPages={23}
+          totalPages={data.petList.totalPages}
         />
       </Container>
     </Box>
