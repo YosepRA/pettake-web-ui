@@ -9,6 +9,7 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 
 import { useAuthentication } from '@Features/user/AuthenticationContext.jsx';
+import { promiseResolver } from '@Utils/index.js';
 
 const defaultValues = {
   username: '',
@@ -20,14 +21,20 @@ const Login = function LoginComponent() {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const handleFormSubmit = (values) => {
-    console.log(JSON.stringify(values, null, 2));
+  const handleFormSubmit = async (values) => {
+    const [result, loginError] = await promiseResolver(login(values));
 
-    login(values, () => {
-      const { from } = location.state || { from: { pathname: '/' } };
+    if (loginError) {
+      console.error('Login error:', loginError);
 
-      navigate(from, { replace: true });
-    });
+      return undefined;
+    }
+
+    const { from } = location.state || { from: { pathname: '/' } };
+
+    navigate(from, { replace: true });
+
+    return undefined;
   };
 
   return (

@@ -40,7 +40,7 @@ const PetForm = function PetFormComponent() {
     console.log(JSON.stringify(values, null, 2));
   };
 
-  const ageOptions = pet.utils.pet.utils.petFormHelpers.createSelectOptions(
+  const ageOptions = pet.utils.petFormHelpers.createSelectOptions(
     petInputData.ages,
   );
   const genderOptions = pet.utils.petFormHelpers.createSelectOptions(

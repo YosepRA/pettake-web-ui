@@ -11,6 +11,7 @@ import ListItemText from '@mui/material/ListItemText';
 import Divider from '@mui/material/Divider';
 
 import { useAuthentication } from '@Features/user/AuthenticationContext.jsx';
+import { promiseResolver } from '@Utils/index.js';
 
 const navigationItems = {
   main: [
@@ -48,10 +49,18 @@ const MobileNavDrawer = function MobileNavDrawerComponent() {
     setDrawerOpen(newOpen);
   };
 
-  const handleLogout = () => {
-    logout(() => {
-      navigate('/');
-    });
+  const handleLogout = async () => {
+    const [result, logoutError] = await promiseResolver(logout());
+
+    if (logoutError) {
+      console.error('Logout error:', logoutError);
+
+      return undefined;
+    }
+
+    navigate('/');
+
+    return undefined;
   };
 
   return (

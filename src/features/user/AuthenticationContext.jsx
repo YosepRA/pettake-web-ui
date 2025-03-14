@@ -1,5 +1,9 @@
 import { createContext, useContext, useState } from 'react';
 
+import user from '@Features/user/index.js';
+
+const { api: userAPI } = user;
+
 const defaultValues = {
   isLoggedIn: false,
   user: null,
@@ -16,22 +20,43 @@ export const AuthenticationProvider = function AuthenticationProviderComponent({
   const [user, setUser] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  const login = (user, cb) => {
-    console.log('User login');
+  const login = async (data) => {
+    const result = await userAPI.login(data);
+
+    if (result.status === 'error') {
+      throw new Error(result.message);
+    }
 
     setIsLoggedIn(true);
-    cb();
+    setUser(result.user);
+
+    return result;
   };
 
-  const register = (user, cb) => {
-    console.log('User registration');
+  const register = async (data) => {
+    const result = await userAPI.register(data);
+
+    if (result.status === 'error') {
+      throw new Error(result.message);
+    }
+
+    setIsLoggedIn(true);
+    setUser(result.user);
+
+    return result;
   };
 
-  const logout = (cb) => {
-    console.log('User logout');
+  const logout = async () => {
+    const result = await userAPI.logout();
+
+    if (result.status === 'error') {
+      throw new Error(result.message);
+    }
 
     setIsLoggedIn(false);
-    cb();
+    setUser(null);
+
+    return result;
   };
 
   return (

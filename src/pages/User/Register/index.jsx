@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 import { Formik, Form } from 'formik';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
@@ -7,6 +7,9 @@ import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
+
+import { useAuthentication } from '@Features/user/AuthenticationContext.jsx';
+import { promiseResolver } from '@Utils/index.js';
 
 const defaultValues = {
   username: '',
@@ -17,8 +20,21 @@ const defaultValues = {
 };
 
 const Register = function RegisterComponent() {
-  const handleFormSubmit = (values) => {
-    console.log(JSON.stringify(values, null, 2));
+  const { register } = useAuthentication();
+  const navigate = useNavigate();
+
+  const handleFormSubmit = async (values) => {
+    const [result, registerError] = await promiseResolver(register(values));
+
+    if (registerError) {
+      console.error('Register error:', registerError);
+
+      return undefined;
+    }
+
+    navigate('/');
+
+    return undefined;
   };
 
   return (
