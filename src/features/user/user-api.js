@@ -7,7 +7,7 @@ const userAPI = {
     return response.data;
   },
   async register(user) {
-    const response = await client.post('/user/register', { user });
+    const response = await client.post('/user/register', user);
 
     return response.data;
   },

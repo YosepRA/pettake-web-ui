@@ -1,6 +1,6 @@
 import petQueries from './graphql/queries.js';
 import petFormHelpers from './utils/pet-form-helpers.jsx';
-import uploadImages from './utils/upload-images.js';
+import demoUploadImages from './utils/demo-upload-images.js';
 
 const petFeatures = {
   graphql: {
@@ -8,7 +8,7 @@ const petFeatures = {
   },
   utils: {
     petFormHelpers,
-    uploadImages,
+    demoUploadImages,
   },
 };
 

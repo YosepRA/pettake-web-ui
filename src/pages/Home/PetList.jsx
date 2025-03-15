@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useQuery } from '@apollo/Client';
+import { useQuery } from '@apollo/client';
 import { useSearchParams, Link as RouterLink } from 'react-router';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
