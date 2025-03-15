@@ -24,7 +24,9 @@ const Register = function RegisterComponent() {
   const navigate = useNavigate();
 
   const handleFormSubmit = async (values) => {
-    const [result, registerError] = await promiseResolver(register(values));
+    const [result, registerError] = await promiseResolver(
+      register({ user: values }),
+    );
 
     if (registerError) {
       console.error('Register error:', registerError);

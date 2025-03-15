@@ -40,6 +40,22 @@ const petQueries = {
       }
     }
   `,
+  GET_USER_PET_LIST: gql`
+    query GetUserPetList($page: Int!, $sort: String!) {
+      userPetList(page: $page, sort: $sort) {
+        docs {
+          _id
+          name
+          description
+          images {
+            url
+          }
+        }
+        totalDocs
+        totalPages
+      }
+    }
+  `,
 };
 
 export default petQueries;
