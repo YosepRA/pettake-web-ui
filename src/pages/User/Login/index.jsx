@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router';
 import { Formik, Form } from 'formik';
 import Typography from '@mui/material/Typography';
@@ -17,9 +17,17 @@ const defaultValues = {
 };
 
 const Login = function LoginComponent() {
-  const { login } = useAuthentication();
+  const { login, isLoggedIn } = useAuthentication();
   const location = useLocation();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      const { from } = location.state || { from: { pathname: '/' } };
+
+      navigate(from);
+    }
+  }, [isLoggedIn]);
 
   const handleFormSubmit = async (values) => {
     const [result, loginError] = await promiseResolver(login(values));

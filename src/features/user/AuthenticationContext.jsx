@@ -1,6 +1,7 @@
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useState, useEffect } from 'react';
 
 import user from '@Features/user/index.js';
+import { promiseResolver } from '@Utils/index.js';
 
 const { api: userAPI } = user;
 
@@ -19,6 +20,32 @@ export const AuthenticationProvider = function AuthenticationProviderComponent({
 }) {
   const [user, setUser] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const initiateSession = async () => {
+      const [result, getUserSessionError] = await promiseResolver(
+        userAPI.getUserSession(),
+      );
+
+      if (getUserSessionError || result.status === 'error') {
+        console.error(
+          'Get user session error:',
+          getUserSessionError || result.message,
+        );
+
+        return undefined;
+      }
+
+      if (result.user !== null) {
+        setIsLoggedIn(true);
+        setUser(result.user);
+      }
+
+      return undefined;
+    };
+
+    initiateSession();
+  }, []);
 
   const login = async (data) => {
     const result = await userAPI.login(data);
