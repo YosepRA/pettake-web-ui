@@ -50,6 +50,8 @@ const MobileNavDrawer = function MobileNavDrawerComponent() {
   };
 
   const handleLogout = async () => {
+    navigate('/');
+
     const [result, logoutError] = await promiseResolver(logout());
 
     if (logoutError) {
@@ -57,8 +59,6 @@ const MobileNavDrawer = function MobileNavDrawerComponent() {
 
       return undefined;
     }
-
-    navigate('/');
 
     return undefined;
   };

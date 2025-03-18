@@ -16,6 +16,11 @@ const userAPI = {
 
     return response.data;
   },
+  async getUserSession() {
+    const response = await client.get('/user/get-user-session');
+
+    return response.data;
+  },
 };
 
 export default userAPI;
