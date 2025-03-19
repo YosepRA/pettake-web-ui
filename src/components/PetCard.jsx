@@ -13,7 +13,11 @@ const PetCard = function PetCardComponent({ pet }) {
     <Card sx={{ maxWidth: 345 }}>
       <CardMedia
         sx={{ height: 140 }}
-        image={pet.images[0].url}
+        image={
+          pet.images.length > 0
+            ? pet.images[0].url
+            : 'https://placehold.co/1920x1080?text=No+Image'
+        }
         title={pet.name}
       />
       <CardContent>
