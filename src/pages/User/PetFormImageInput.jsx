@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
@@ -14,6 +14,11 @@ const PetFormImageInput = function PetFormImageInputComponent({
   images,
   setFieldValue,
 }) {
+  // // To differentiate between old and new images. Useful for form cancellation to
+  // // delete only the new images and not the old images when editing, and to delete
+  // // all images from server when creating a new pet.
+  // const [newImages, setNewImages] = useState([]);
+
   const inputRef = useRef();
 
   const handleChange = async (event) => {

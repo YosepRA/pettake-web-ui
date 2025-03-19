@@ -56,6 +56,25 @@ const petQueries = {
       }
     }
   `,
+  GET_USER_PET_DETAILS: gql`
+    query GetUserPetDetails($petId: ID!) {
+      pet(id: $petId) {
+        name
+        breed
+        age
+        gender
+        coatLength
+        preferHomeWith
+        preferHomeWithout
+        health
+        description
+        images {
+          publicId
+          url
+        }
+      }
+    }
+  `,
 };
 
 export default petQueries;

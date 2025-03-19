@@ -1,5 +1,6 @@
 import React from 'react';
-import { useParams, useLocation } from 'react-router';
+import { useQuery, useMutation } from '@apollo/client';
+import { useParams, useLocation, useNavigate } from 'react-router';
 import { Formik, Form } from 'formik';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
@@ -15,8 +16,14 @@ import FormGroup from '@mui/material/FormGroup';
 
 import { petInputData } from '@Data/index.js';
 import pet from '@Features/pet/index.js';
+import { promiseResolver, cleanGQLTypename } from '@Utils/index.js';
 
 import PetFormImageInput from './PetFormImageInput.jsx';
+
+const {
+  graphql: { queries, mutations },
+  utils: { petFormHelpers },
+} = pet;
 
 const defaultValues = {
   name: '',
@@ -27,31 +34,86 @@ const defaultValues = {
   preferHomeWith: [],
   preferHomeWithout: [],
   health: [],
+  description: '',
   images: [],
-  description: [],
 };
 
 const PetForm = function PetFormComponent() {
   const { id } = useParams();
   const location = useLocation();
+  const navigate = useNavigate();
   const editPathPattern = /\/user\/pet\/\w+\/edit/;
+  const isEditPage = editPathPattern.test(location.pathname);
 
-  const handleFormSubmit = (values) => {
-    console.log(JSON.stringify(values, null, 2));
+  /* ========== GraphQL Interfaces ========== */
+
+  const {
+    data: queryData,
+    loading: queryLoading,
+    error: queryError,
+  } = useQuery(queries.GET_USER_PET_DETAILS, {
+    variables: {
+      petId: id,
+    },
+    skip: !isEditPage,
+  });
+  const [createNewPet, { error: createError }] = useMutation(
+    mutations.CREATE_NEW_PET,
+    {
+      refetchQueries: [queries.GET_USER_PET_LIST],
+    },
+  );
+  const [editPet, { error: editError }] = useMutation(mutations.EDIT_PET, {
+    refetchQueries: [queries.GET_USER_PET_LIST, queries.GET_USER_PET_DETAILS],
+  });
+
+  /* ========== Event Handler ========== */
+
+  const handleFormSubmit = async (values) => {
+    const mutateFn = isEditPage ? editPet : createNewPet;
+    const variables = isEditPage
+      ? { petId: id, petUpdates: values }
+      : { pet: values };
+
+    const [result, mutationError] = await promiseResolver(
+      mutateFn({ variables }),
+    );
+
+    if (mutationError) return undefined;
+
+    navigate('/user/pet');
+
+    return undefined;
   };
 
-  const ageOptions = pet.utils.petFormHelpers.createSelectOptions(
-    petInputData.ages,
-  );
-  const genderOptions = pet.utils.petFormHelpers.createSelectOptions(
+  /* ========== Component Buildup ========== */
+
+  const ageOptions = petFormHelpers.createSelectOptions(petInputData.ages);
+  const genderOptions = petFormHelpers.createSelectOptions(
     petInputData.genders,
   );
-  const coatLengthOptions = pet.utils.petFormHelpers.createSelectOptions(
+  const coatLengthOptions = petFormHelpers.createSelectOptions(
     petInputData.coatLengths,
   );
 
+  const initialValues =
+    editPathPattern.test(location.pathname) && queryData
+      ? cleanGQLTypename(queryData.pet)
+      : defaultValues;
+
+  /* ========== Render ========== */
+
+  if (queryLoading) return <Typography>Loading...</Typography>;
+
   return (
     <Container sx={{ pt: 2 }}>
+      {createError ||
+        (editError && (
+          <Typography color="error" sx={{ textAlign: 'center' }}>
+            {createError?.message || editError?.message}
+          </Typography>
+        ))}
+
       <Typography
         variant="h5"
         component="h1"
@@ -60,7 +122,11 @@ const PetForm = function PetFormComponent() {
         {location.pathname.match(editPathPattern) ? 'Edit Pet' : 'Create Pet'}
       </Typography>
 
-      <Formik initialValues={defaultValues} onSubmit={handleFormSubmit}>
+      <Formik
+        initialValues={initialValues}
+        onSubmit={handleFormSubmit}
+        enableReinitialize
+      >
         {({ values, handleChange, setFieldValue, handleSubmit }) => (
           <Form onSubmit={handleSubmit}>
             <Stack direction="column" alignItems="stretch" rowGap={2}>
@@ -131,7 +197,7 @@ const PetForm = function PetFormComponent() {
                 <FormLabel component="legend">Prefer Home With</FormLabel>
 
                 <FormGroup>
-                  {pet.utils.petFormHelpers.createMultipleCheckboxInput(
+                  {petFormHelpers.createMultipleCheckboxInput(
                     petInputData.preferHomes,
                     'preferHomeWith',
                     values.preferHomeWith,
@@ -144,7 +210,7 @@ const PetForm = function PetFormComponent() {
                 <FormLabel component="legend">Prefer Home Without</FormLabel>
 
                 <FormGroup>
-                  {pet.utils.petFormHelpers.createMultipleCheckboxInput(
+                  {petFormHelpers.createMultipleCheckboxInput(
                     petInputData.preferHomes,
                     'preferHomeWithout',
                     values.preferHomeWithout,
@@ -157,7 +223,7 @@ const PetForm = function PetFormComponent() {
                 <FormLabel component="legend">Health</FormLabel>
 
                 <FormGroup>
-                  {pet.utils.petFormHelpers.createMultipleCheckboxInput(
+                  {petFormHelpers.createMultipleCheckboxInput(
                     petInputData.healths,
                     'health',
                     values.health,
@@ -165,6 +231,17 @@ const PetForm = function PetFormComponent() {
                   )}
                 </FormGroup>
               </FormControl>
+
+              <TextField
+                id="description"
+                name="description"
+                value={values.description}
+                onChange={handleChange}
+                label="Description"
+                variant="outlined"
+                multiline
+                rows={5}
+              />
 
               <PetFormImageInput
                 images={values.images}
