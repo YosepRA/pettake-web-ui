@@ -19,6 +19,7 @@ const {
 const PetList = function PetListComponent() {
   const [searchParams, setSearchParams] = useSearchParams();
 
+  // Todo: Implement filter.
   const { data, loading, error } = useQuery(queries.GET_PET_LIST, {
     variables: {
       page: searchParams.get('page')
@@ -37,7 +38,12 @@ const PetList = function PetListComponent() {
         <Typography
           variant="h5"
           component="h1"
-          sx={{ mb: 2, textAlign: 'center' }}
+          sx={{
+            mb: 2,
+            fontFamily: 'Comfortaa',
+            textAlign: 'center',
+            color: 'primary.main',
+          }}
         >
           Find Your Pet
         </Typography>

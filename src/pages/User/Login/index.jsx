@@ -61,7 +61,7 @@ const Login = function LoginComponent() {
             pb: 6,
           }}
         >
-          <Typography variant="h5" component="h1">
+          <Typography variant="h5" component="h1" sx={{ color: 'inherit' }}>
             User Login
           </Typography>
           <Typography variant="subtitle2">Log into your account</Typography>

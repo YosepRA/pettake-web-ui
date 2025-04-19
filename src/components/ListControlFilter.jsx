@@ -13,6 +13,7 @@ import FormGroup from '@mui/material/FormGroup';
 import FormLabel from '@mui/material/FormLabel';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { petInputData } from '@Data/index.js';
 import pet from '@Features/pet/index.js';
@@ -76,7 +77,17 @@ const ListControlFilter = function ListControlFilterComponent({
 
   return (
     <>
-      <Button variant="outlined" onClick={handleFilterClick}>
+      <Button
+        variant="outlined"
+        color="secondary"
+        onClick={handleFilterClick}
+        startIcon={<FontAwesomeIcon icon="fa-solid fa-filter" />}
+        sx={{
+          '& .MuiButton-startIcon svg': {
+            fontSize: '0.8rem',
+          },
+        }}
+      >
         Filter
       </Button>
 

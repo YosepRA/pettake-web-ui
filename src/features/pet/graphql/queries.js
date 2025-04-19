@@ -7,7 +7,7 @@ const petQueries = {
         docs {
           _id
           name
-          description
+          breed
           images {
             url
           }
@@ -46,7 +46,7 @@ const petQueries = {
         docs {
           _id
           name
-          description
+          breed
           images {
             url
           }

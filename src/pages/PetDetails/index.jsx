@@ -84,44 +84,49 @@ const PetDetails = function PetDetailsComponent() {
 
             <Stack direction="row">
               <Typography sx={{ flex: '1 0 30%' }}>Breed</Typography>
-              <Typography sx={{ flex: '1 0 70%' }}>
-                : {data.pet.breed}
-              </Typography>
+              <Typography sx={{ flex: '1 0 10px' }}>:</Typography>
+              <Typography sx={{ flex: '1 0 70%' }}>{data.pet.breed}</Typography>
             </Stack>
             <Stack direction="row">
               <Typography sx={{ flex: '1 0 30%' }}>Age</Typography>
-              <Typography sx={{ flex: '1 0 70%' }}>: {data.pet.age}</Typography>
+              <Typography sx={{ flex: '1 0 10px' }}>:</Typography>
+              <Typography sx={{ flex: '1 0 70%' }}>{data.pet.age}</Typography>
             </Stack>
             <Stack direction="row">
               <Typography sx={{ flex: '1 0 30%' }}>Gender</Typography>
+              <Typography sx={{ flex: '1 0 10px' }}>:</Typography>
               <Typography sx={{ flex: '1 0 70%' }}>
-                : {data.pet.gender}
+                {data.pet.gender}
               </Typography>
             </Stack>
             <Stack direction="row">
               <Typography sx={{ flex: '1 0 30%' }}>Coat Length</Typography>
+              <Typography sx={{ flex: '1 0 10px' }}>:</Typography>
               <Typography sx={{ flex: '1 0 70%' }}>
-                : {data.pet.coatLength}
+                {data.pet.coatLength}
               </Typography>
             </Stack>
             <Stack direction="row">
               <Typography sx={{ flex: '1 0 30%' }}>Prefer Home With</Typography>
+              <Typography sx={{ flex: '1 0 10px' }}>:</Typography>
               <Typography sx={{ flex: '1 0 70%' }}>
-                : {data.pet.preferHomeWith.join(', ')}
+                {data.pet.preferHomeWith.join(', ')}
               </Typography>
             </Stack>
             <Stack direction="row">
               <Typography sx={{ flex: '1 0 30%' }}>
                 Prefer Home Without
               </Typography>
+              <Typography sx={{ flex: '1 0 10px' }}>:</Typography>
               <Typography sx={{ flex: '1 0 70%' }}>
-                : {data.pet.preferHomeWithout.join(', ')}
+                {data.pet.preferHomeWithout.join(', ')}
               </Typography>
             </Stack>
             <Stack direction="row">
               <Typography sx={{ flex: '1 0 30%' }}>Health</Typography>
+              <Typography sx={{ flex: '1 0 10px' }}>:</Typography>
               <Typography sx={{ flex: '1 0 70%' }}>
-                : {data.pet.health.join(', ')}
+                {data.pet.health.join(', ')}
               </Typography>
             </Stack>
           </Box>
@@ -133,20 +138,23 @@ const PetDetails = function PetDetailsComponent() {
 
             <Stack direction="row">
               <Typography sx={{ flex: '1 0 30%' }}>Name</Typography>
+              <Typography sx={{ flex: '1 0 10px' }}>:</Typography>
               <Typography sx={{ flex: '1 0 70%' }}>
-                : {data.pet.author.name}
+                {data.pet.author.name}
               </Typography>
             </Stack>
             <Stack direction="row">
               <Typography sx={{ flex: '1 0 30%' }}>Phone</Typography>
+              <Typography sx={{ flex: '1 0 10px' }}>:</Typography>
               <Typography sx={{ flex: '1 0 70%' }}>
-                : {data.pet.author.phone}
+                {data.pet.author.phone}
               </Typography>
             </Stack>
             <Stack direction="row">
               <Typography sx={{ flex: '1 0 30%' }}>Address</Typography>
+              <Typography sx={{ flex: '1 0 10px' }}>:</Typography>
               <Typography sx={{ flex: '1 0 70%' }}>
-                : {data.pet.author.address}
+                {data.pet.author.address}
               </Typography>
             </Stack>
           </Box>

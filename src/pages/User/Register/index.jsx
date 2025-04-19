@@ -55,7 +55,7 @@ const Register = function RegisterComponent() {
             pb: 6,
           }}
         >
-          <Typography variant="h5" component="h1">
+          <Typography variant="h5" component="h1" sx={{ color: 'inherit' }}>
             User Registration
           </Typography>
           <Typography variant="subtitle2">Create a new user account</Typography>

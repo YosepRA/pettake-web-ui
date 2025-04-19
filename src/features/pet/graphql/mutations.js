@@ -11,7 +11,12 @@ const petMutations = {
   EDIT_PET: gql`
     mutation EditPet($petId: ID!, $petUpdates: PetUpdateInput!) {
       petUpdate(id: $petId, petUpdates: $petUpdates) {
+        _id
         name
+        breed
+        images {
+          url
+        }
       }
     }
   `,
