@@ -17,8 +17,11 @@ const MainNavbar = function MainNavbarComponent() {
           <Link to="/" component={RouterLink}>
             <Typography
               variant="h6"
-              component="div"
-              sx={{ fontFamily: 'Comfortaa', color: 'primary.contrastText' }}
+              component="p"
+              sx={{
+                fontFamily: 'Blueberry Regular',
+                color: 'primary.contrastText',
+              }}
             >
               PetTake
             </Typography>

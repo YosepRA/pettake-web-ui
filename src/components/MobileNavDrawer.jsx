@@ -9,6 +9,7 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import Divider from '@mui/material/Divider';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { useAuthentication } from '@Features/user/AuthenticationContext.jsx';
 import { promiseResolver } from '@Utils/index.js';
@@ -45,7 +46,13 @@ const MobileNavDrawer = function MobileNavDrawerComponent() {
   const { isLoggedIn, logout } = useAuthentication();
   const navigate = useNavigate();
 
-  const toggleDrawer = (newOpen) => () => {
+  const toggleDrawer = (newOpen) => (event) => {
+    // if (!newOpen && event.target.tagName.toLowerCase() === 'span') {
+    //   setDrawerOpen(newOpen);
+    // } else if (newOpen) {
+    //   setDrawerOpen(newOpen);
+    // }
+
     setDrawerOpen(newOpen);
   };
 
@@ -67,17 +74,37 @@ const MobileNavDrawer = function MobileNavDrawerComponent() {
     <Box>
       <Button
         onClick={toggleDrawer(true)}
-        sx={{ color: 'primary.contrastText', lineHeight: 0 }}
+        sx={{
+          minWidth: 0,
+          color: 'primary.contrastText',
+          lineHeight: 0,
+          fontSize: 24,
+        }}
       >
-        Menu
+        <FontAwesomeIcon icon="fa-solid fa-bars" />
       </Button>
 
       <Drawer open={drawerOpen} onClose={toggleDrawer(false)}>
         <Box
-          sx={{ width: 250 }}
+          sx={{
+            width: 250,
+            height: 1,
+            bgcolor: 'primary.main',
+            color: 'primary.contrastText',
+            '& .MuiListItemButton-root': {
+              p: 0,
+            },
+          }}
           role="presentation"
           onClick={toggleDrawer(false)}
         >
+          <Typography
+            variant="display5"
+            sx={{ display: 'block', px: 2, py: 2 }}
+          >
+            PetTake
+          </Typography>
+
           <List>
             {navigationItems.main.map(({ label, path }) => (
               <ListItem key={label}>
@@ -87,8 +114,6 @@ const MobileNavDrawer = function MobileNavDrawerComponent() {
               </ListItem>
             ))}
           </List>
-
-          <Divider />
 
           {isLoggedIn ? (
             <List>

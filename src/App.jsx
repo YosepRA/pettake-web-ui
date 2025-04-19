@@ -12,11 +12,6 @@ import PetForm from '@Pages/User/PetForm.jsx';
 import Login from '@Pages/User/Login/index.jsx';
 import Register from '@Pages/User/Register/index.jsx';
 
-import '@fontsource/roboto';
-import '@fontsource/comfortaa/400.css';
-import '@fontsource/comfortaa/700.css';
-import 'swiper/css';
-
 const App = function AppComponent() {
   return (
     <>

@@ -8,6 +8,8 @@ import image from '@Features/image/index.js';
 import VisuallyHiddenInput from '@Components/styled/VisuallyHiddenInput.jsx';
 import { promiseResolver } from '@Utils/index.js';
 
+import PetFormImagePreview from './PetFormImagePreview.jsx';
+
 const { api: imageAPI } = image;
 
 const PetFormImageInput = function PetFormImageInputComponent({
@@ -47,6 +49,9 @@ const PetFormImageInput = function PetFormImageInputComponent({
   };
 
   const handleDelete = async (publicId) => {
+    // // Temporarily disable image deletion.
+    // return undefined;
+
     const data = { publicId };
 
     const [result, deleteError] = await promiseResolver(imageAPI.delete(data));
@@ -82,14 +87,13 @@ const PetFormImageInput = function PetFormImageInputComponent({
       </Button>
 
       {images.length > 0 && (
-        <Box component="ul">
+        <Box component="ul" sx={{ listStyle: 'none', pl: 0 }}>
           {images.map((image) => (
-            <li
+            <PetFormImagePreview
               key={image.publicId}
-              onClick={() => handleDelete(image.publicId)}
-            >
-              {image.url}
-            </li>
+              image={image}
+              handleDelete={handleDelete}
+            />
           ))}
         </Box>
       )}

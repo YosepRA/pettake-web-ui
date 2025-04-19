@@ -5,6 +5,7 @@ import Popover from '@mui/material/Popover';
 import Box from '@mui/material/Box';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const sort = [
   {
@@ -45,7 +46,17 @@ const ListControlSort = function ListControlSortComponent({
 
   return (
     <>
-      <Button variant="outlined" onClick={handleSortClick}>
+      <Button
+        variant="outlined"
+        color="secondary"
+        onClick={handleSortClick}
+        startIcon={<FontAwesomeIcon icon="fa-solid fa-sort" />}
+        sx={{
+          '& .MuiButton-startIcon svg': {
+            fontSize: '1rem',
+          },
+        }}
+      >
         Sort
       </Button>
 

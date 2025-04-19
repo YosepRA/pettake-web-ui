@@ -30,12 +30,27 @@ const Home = function HomeComponent() {
           bgcolor: 'primary.main',
           color: 'primary.contrastText',
           textAlign: 'center',
+          fontWeight: 400,
         }}
       >
-        <Typography variant="h6" component="p">
+        <Typography
+          variant="body"
+          component="p"
+          sx={{
+            fontSize: 'h6.fontSize',
+            fontWeight: 'inherit',
+            '& strong': {
+              fontWeight: 500,
+            },
+          }}
+        >
           <strong>Your Pet Buddy</strong> is
         </Typography>
-        <Typography variant="h6" component="p">
+        <Typography
+          variant="body"
+          component="p"
+          sx={{ fontSize: 'h6.fontSize', fontWeight: 'inherit' }}
+        >
           waiting for you
         </Typography>
       </Box>

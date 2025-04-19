@@ -10,9 +10,9 @@ import Link from '@mui/material/Link';
 
 const PetCard = function PetCardComponent({ pet }) {
   return (
-    <Card sx={{ maxWidth: 345 }}>
+    <Card sx={{ width: 1, maxWidth: 345 }}>
       <CardMedia
-        sx={{ height: 140 }}
+        sx={{ height: 240 }}
         image={
           pet.images.length > 0
             ? pet.images[0].url
@@ -20,17 +20,22 @@ const PetCard = function PetCardComponent({ pet }) {
         }
         title={pet.name}
       />
-      <CardContent>
-        <Typography gutterBottom variant="h5" component="div">
+      <CardContent
+        sx={{
+          p: 1,
+          textAlign: 'center',
+          '&.MuiCardContent-root:last-child': {
+            pb: 2,
+          },
+        }}
+      >
+        <Typography gutterBottom variant="h5" component="div" sx={{ mb: 0 }}>
           {pet.name}
         </Typography>
         <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-          {pet.description}
+          {pet.breed}
         </Typography>
       </CardContent>
-      <CardActions>
-        <Button size="small">Learn More</Button>
-      </CardActions>
     </Card>
   );
 };

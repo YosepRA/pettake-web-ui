@@ -59,12 +59,9 @@ const PetForm = function PetFormComponent() {
   });
   const [createNewPet, { error: createError }] = useMutation(
     mutations.CREATE_NEW_PET,
-    {
-      refetchQueries: [queries.GET_USER_PET_LIST],
-    },
   );
   const [editPet, { error: editError }] = useMutation(mutations.EDIT_PET, {
-    refetchQueries: [queries.GET_USER_PET_LIST, queries.GET_USER_PET_DETAILS],
+    refetchQueries: [queries.GET_USER_PET_DETAILS],
   });
 
   /* ========== Event Handler ========== */
@@ -106,7 +103,7 @@ const PetForm = function PetFormComponent() {
   if (queryLoading) return <Typography>Loading...</Typography>;
 
   return (
-    <Container sx={{ pt: 2 }}>
+    <Container sx={{ pt: 4 }}>
       {createError ||
         (editError && (
           <Typography color="error" sx={{ textAlign: 'center' }}>
@@ -117,7 +114,12 @@ const PetForm = function PetFormComponent() {
       <Typography
         variant="h5"
         component="h1"
-        sx={{ mb: 2, textAlign: 'center' }}
+        sx={{
+          mb: 3,
+          fontFamily: 'Comfortaa',
+          textAlign: 'center',
+          color: 'primary.main',
+        }}
       >
         {location.pathname.match(editPathPattern) ? 'Edit Pet' : 'Create Pet'}
       </Typography>
