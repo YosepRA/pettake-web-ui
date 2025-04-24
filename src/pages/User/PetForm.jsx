@@ -45,7 +45,7 @@ const PetForm = function PetFormComponent() {
   const editPathPattern = /\/user\/pet\/\w+\/edit/;
   const isEditPage = editPathPattern.test(location.pathname);
 
-  /* ========== GraphQL Interfaces ========== */
+  /* ========== GraphQL Interfaces and Component States ========== */
 
   const {
     data: queryData,
@@ -67,18 +67,36 @@ const PetForm = function PetFormComponent() {
   /* ========== Event Handler ========== */
 
   const handleFormSubmit = async (values) => {
+    const [{ imageResult, blobImages }, processImageError] =
+      await promiseResolver(petFormHelpers.processImage(values.images));
+
+    if (processImageError) {
+      console.error('Process image error:', processImageError);
+
+      return undefined;
+    }
+
     const mutateFn = isEditPage ? editPet : createNewPet;
+
+    values = { ...values, images: imageResult };
+
     const variables = isEditPage
       ? { petId: id, petUpdates: values }
       : { pet: values };
 
-    const [result, mutationError] = await promiseResolver(
+    const [mutationResult, mutationError] = await promiseResolver(
       mutateFn({ variables }),
     );
 
-    if (mutationError) return undefined;
+    if (mutationError) {
+      console.error('Form submission error:', mutationError);
+
+      return undefined;
+    }
 
     navigate('/user/pet');
+
+    petFormHelpers.cleanBlobImages(blobImages);
 
     return undefined;
   };

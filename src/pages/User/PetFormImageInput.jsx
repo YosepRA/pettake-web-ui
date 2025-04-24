@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
@@ -10,63 +10,124 @@ import { promiseResolver } from '@Utils/index.js';
 
 import PetFormImagePreview from './PetFormImagePreview.jsx';
 
+const {
+  utils: { petFormHelpers },
+} = pet;
 const { api: imageAPI } = image;
+
+function createImagePreview(images) {
+  const result = [];
+
+  for (const img of images) {
+    const previewUrl = URL.createObjectURL(img);
+    const imagePreview = {
+      url: previewUrl,
+      file: img,
+    };
+
+    result.push(imagePreview);
+  }
+
+  return result;
+}
 
 const PetFormImageInput = function PetFormImageInputComponent({
   images,
   setFieldValue,
 }) {
-  // // To differentiate between old and new images. Useful for form cancellation to
-  // // delete only the new images and not the old images when editing, and to delete
-  // // all images from server when creating a new pet.
-  // const [newImages, setNewImages] = useState([]);
-
   const inputRef = useRef();
 
-  const handleChange = async (event) => {
-    const form = new FormData();
+  // const handleChange = async (event) => {
+  //   const form = new FormData();
 
-    for (const image of event.target.files) {
-      form.append('images', image);
-    }
+  //   for (const image of event.target.files) {
+  //     form.append('images', image);
+  //   }
 
-    const [result, uploadError] = await promiseResolver(imageAPI.upload(form));
+  //   const [result, uploadError] = await promiseResolver(imageAPI.upload(form));
 
-    if (uploadError || result.status === 'error') {
-      console.error('Image upload error:', uploadError || result.message);
+  //   if (uploadError || result.status === 'error') {
+  //     console.error('Image upload error:', uploadError || result.message);
 
-      return undefined;
-    }
+  //     return undefined;
+  //   }
 
-    // Update form state to include the returned upload data.
-    setFieldValue('images', images.concat(result.data));
+  //   // Update form state to include the returned upload data.
+  //   setFieldValue('images', images.concat(result.data));
+
+  //   // To reset input value in order to always start fresh whenever there is a change
+  //   // event happen.
+  //   inputRef.current.value = '';
+
+  //   return undefined;
+  // };
+
+  // const handleDelete = async (publicId) => {
+  //   // // Temporarily disable image deletion.
+  //   // return undefined;
+
+  //   const data = { publicId };
+
+  //   const [result, deleteError] = await promiseResolver(imageAPI.delete(data));
+
+  //   if (deleteError || result.status === 'error') {
+  //     console.error('Image delete error:', deleteError || result.message);
+
+  //     return undefined;
+  //   }
+
+  //   const filterResult = images.filter((img) => img.publicId !== publicId);
+
+  //   setFieldValue('images', filterResult);
+
+  //   return undefined;
+  // };
+
+  /* ========== Effect Hooks ========== */
+
+  useEffect(() => {
+    return () => {
+      const blobImages = images.filter((img) => img.url.startsWith('blob:'));
+
+      petFormHelpers.cleanBlobImages(blobImages);
+    };
+  }, [images]);
+
+  /* ========== Event Handlers ========== */
+
+  const handleChange = (event) => {
+    const imagePreview = createImagePreview(event.target.files);
+
+    setFieldValue('images', images.concat(imagePreview));
 
     // To reset input value in order to always start fresh whenever there is a change
-    // event happen.
+    // event happen. Because when we don't do this, the file input won't detect change
+    // events if we input it with the same set of images between two interactions.
     inputRef.current.value = '';
-
-    return undefined;
   };
 
-  const handleDelete = async (publicId) => {
-    // // Temporarily disable image deletion.
-    // return undefined;
+  const handleDelete = (deletedImage) => {
+    if (deletedImage.url.startsWith('blob:')) {
+      // If it's a new image, therefore a Blob URL, then revoke it and remove it
+      // from Formik state.
+      URL.revokeObjectURL(deletedImage.url);
 
-    const data = { publicId };
+      const newImagesState = images.filter(
+        (img) => img.url !== deletedImage.url,
+      );
 
-    const [result, deleteError] = await promiseResolver(imageAPI.delete(data));
+      setFieldValue('images', newImagesState);
+    } else if (deletedImage.url.startsWith('https:')) {
+      // If it's an old image that is already uploaded to Cloudinary, then add
+      // a "delete" action property to "mark it" on form submission that this
+      // particular image is supposed to be deleted.
 
-    if (deleteError || result.status === 'error') {
-      console.error('Image delete error:', deleteError || result.message);
+      const newImagesState = images.map((img) =>
+        img.url === deletedImage.url ? { ...img, action: 'delete' } : img,
+      );
 
-      return undefined;
+      setFieldValue('images', newImagesState);
     }
-
-    const filterResult = images.filter((img) => img.publicId !== publicId);
-
-    setFieldValue('images', filterResult);
-
-    return undefined;
   };
 
   return (
@@ -82,6 +143,7 @@ const PetFormImageInput = function PetFormImageInputComponent({
           type="file"
           onChange={handleChange}
           multiple
+          accept="image/*"
           ref={inputRef}
         />
       </Button>
@@ -90,7 +152,7 @@ const PetFormImageInput = function PetFormImageInputComponent({
         <Box component="ul" sx={{ listStyle: 'none', pl: 0 }}>
           {images.map((image) => (
             <PetFormImagePreview
-              key={image.publicId}
+              key={image.url}
               image={image}
               handleDelete={handleDelete}
             />
