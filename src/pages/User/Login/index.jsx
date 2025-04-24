@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router';
 import { Formik, Form } from 'formik';
 import Typography from '@mui/material/Typography';
@@ -81,6 +81,7 @@ const Login = function LoginComponent() {
                   onChange={handleChange}
                   label="Username"
                   variant="outlined"
+                  autoFocus
                 />
 
                 <TextField

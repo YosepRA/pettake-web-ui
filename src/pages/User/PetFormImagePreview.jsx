@@ -9,6 +9,10 @@ const PetFormImageReview = function PetFormImageReviewComponent({
   image,
   handleDelete,
 }) {
+  // If the old (uploaded) images are about to be deleted, then don't show it on
+  // the preview section.
+  if (image.action && image.action === 'delete') return undefined;
+
   return (
     <Box component="li" sx={{ '&:not(:last-child)': { mb: 1 } }}>
       <Box
@@ -24,7 +28,7 @@ const PetFormImageReview = function PetFormImageReviewComponent({
         <IconButton
           color="error"
           sx={{ position: 'absolute', top: 0, right: 0 }}
-          onClick={() => handleDelete(image.publicId)}
+          onClick={() => handleDelete(image)}
         >
           <FontAwesomeIcon icon="fa-solid fa-circle-xmark" />
         </IconButton>
