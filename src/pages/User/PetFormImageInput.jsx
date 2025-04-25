@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import { useFormikContext } from 'formik';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
@@ -15,77 +16,18 @@ const {
 } = pet;
 const { api: imageAPI } = image;
 
-function createImagePreview(images) {
-  const result = [];
-
-  for (const img of images) {
-    const previewUrl = URL.createObjectURL(img);
-    const imagePreview = {
-      url: previewUrl,
-      file: img,
-    };
-
-    result.push(imagePreview);
-  }
-
-  return result;
-}
-
-const PetFormImageInput = function PetFormImageInputComponent({
-  images,
-  setFieldValue,
-}) {
+const PetFormImageInput = function PetFormImageInputComponent() {
+  const {
+    values: { images },
+    setFieldValue,
+    isSubmitting,
+  } = useFormikContext();
   const inputRef = useRef();
-
-  // const handleChange = async (event) => {
-  //   const form = new FormData();
-
-  //   for (const image of event.target.files) {
-  //     form.append('images', image);
-  //   }
-
-  //   const [result, uploadError] = await promiseResolver(imageAPI.upload(form));
-
-  //   if (uploadError || result.status === 'error') {
-  //     console.error('Image upload error:', uploadError || result.message);
-
-  //     return undefined;
-  //   }
-
-  //   // Update form state to include the returned upload data.
-  //   setFieldValue('images', images.concat(result.data));
-
-  //   // To reset input value in order to always start fresh whenever there is a change
-  //   // event happen.
-  //   inputRef.current.value = '';
-
-  //   return undefined;
-  // };
-
-  // const handleDelete = async (publicId) => {
-  //   // // Temporarily disable image deletion.
-  //   // return undefined;
-
-  //   const data = { publicId };
-
-  //   const [result, deleteError] = await promiseResolver(imageAPI.delete(data));
-
-  //   if (deleteError || result.status === 'error') {
-  //     console.error('Image delete error:', deleteError || result.message);
-
-  //     return undefined;
-  //   }
-
-  //   const filterResult = images.filter((img) => img.publicId !== publicId);
-
-  //   setFieldValue('images', filterResult);
-
-  //   return undefined;
-  // };
 
   /* ========== Effect Hooks ========== */
 
   useEffect(() => {
+    // Delete all Blob references on form unmount.
     return () => {
       const blobImages = images.filter((img) => img.url.startsWith('blob:'));
 
@@ -96,7 +38,7 @@ const PetFormImageInput = function PetFormImageInputComponent({
   /* ========== Event Handlers ========== */
 
   const handleChange = (event) => {
-    const imagePreview = createImagePreview(event.target.files);
+    const imagePreview = petFormHelpers.createImagePreview(event.target.files);
 
     setFieldValue('images', images.concat(imagePreview));
 
@@ -137,6 +79,7 @@ const PetFormImageInput = function PetFormImageInputComponent({
         role={undefined}
         variant="contained"
         tabIndex={-1}
+        disabled={isSubmitting}
       >
         Upload Images
         <VisuallyHiddenInput

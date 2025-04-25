@@ -1,3 +1,4 @@
+import { useFormikContext } from 'formik';
 import MenuItem from '@mui/material/MenuItem';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
@@ -15,7 +16,13 @@ function createSelectOptions(data) {
   ));
 }
 
-function createMultipleCheckboxInput(data, name, values, handleChange) {
+function createMultipleCheckboxInput(
+  data,
+  name,
+  values,
+  handleChange,
+  disabled,
+) {
   return data.map((value) => (
     <FormControlLabel
       key={value}
@@ -25,6 +32,7 @@ function createMultipleCheckboxInput(data, name, values, handleChange) {
           checked={values.includes(value)}
           value={value}
           onChange={handleChange}
+          disabled={disabled}
         />
       }
       label={value}
@@ -83,11 +91,28 @@ function cleanBlobImages(blobImages) {
   blobImages.forEach((img) => URL.revokeObjectURL(img.url));
 }
 
+function createImagePreview(images) {
+  const result = [];
+
+  for (const img of images) {
+    const previewUrl = URL.createObjectURL(img);
+    const imagePreview = {
+      url: previewUrl,
+      file: img,
+    };
+
+    result.push(imagePreview);
+  }
+
+  return result;
+}
+
 const petFormHelpers = {
   createSelectOptions,
   createMultipleCheckboxInput,
   processImage,
   cleanBlobImages,
+  createImagePreview,
 };
 
 export default petFormHelpers;

@@ -67,6 +67,7 @@ const PetForm = function PetFormComponent() {
   /* ========== Event Handler ========== */
 
   const handleFormSubmit = async (values) => {
+    // Process the images first.
     const [{ imageResult, blobImages }, processImageError] =
       await promiseResolver(petFormHelpers.processImage(values.images));
 
@@ -76,6 +77,7 @@ const PetForm = function PetFormComponent() {
       return undefined;
     }
 
+    // Send mutation request to GraphQL server.
     const mutateFn = isEditPage ? editPet : createNewPet;
 
     values = { ...values, images: imageResult };
@@ -94,6 +96,7 @@ const PetForm = function PetFormComponent() {
       return undefined;
     }
 
+    // Navigate to user dashboard index and cleanup blob data.
     navigate('/user/pet');
 
     petFormHelpers.cleanBlobImages(blobImages);
@@ -147,7 +150,7 @@ const PetForm = function PetFormComponent() {
         onSubmit={handleFormSubmit}
         enableReinitialize
       >
-        {({ values, handleChange, setFieldValue, handleSubmit }) => (
+        {({ values, handleChange, handleSubmit, isSubmitting }) => (
           <Form onSubmit={handleSubmit}>
             <Stack direction="column" alignItems="stretch" rowGap={2}>
               <TextField
@@ -157,6 +160,7 @@ const PetForm = function PetFormComponent() {
                 onChange={handleChange}
                 label="Name"
                 variant="outlined"
+                disabled={isSubmitting}
               />
 
               <TextField
@@ -166,6 +170,7 @@ const PetForm = function PetFormComponent() {
                 onChange={handleChange}
                 label="Breed"
                 variant="outlined"
+                disabled={isSubmitting}
               />
 
               <FormControl fullWidth>
@@ -178,6 +183,7 @@ const PetForm = function PetFormComponent() {
                   value={values.age}
                   label="Age"
                   onChange={handleChange}
+                  disabled={isSubmitting}
                 >
                   {ageOptions}
                 </Select>
@@ -193,6 +199,7 @@ const PetForm = function PetFormComponent() {
                   value={values.gender}
                   label="Gender"
                   onChange={handleChange}
+                  disabled={isSubmitting}
                 >
                   {genderOptions}
                 </Select>
@@ -208,6 +215,7 @@ const PetForm = function PetFormComponent() {
                   value={values.coatLength}
                   label="Coat Length"
                   onChange={handleChange}
+                  disabled={isSubmitting}
                 >
                   {coatLengthOptions}
                 </Select>
@@ -222,6 +230,7 @@ const PetForm = function PetFormComponent() {
                     'preferHomeWith',
                     values.preferHomeWith,
                     handleChange,
+                    isSubmitting,
                   )}
                 </FormGroup>
               </FormControl>
@@ -235,6 +244,7 @@ const PetForm = function PetFormComponent() {
                     'preferHomeWithout',
                     values.preferHomeWithout,
                     handleChange,
+                    isSubmitting,
                   )}
                 </FormGroup>
               </FormControl>
@@ -248,6 +258,7 @@ const PetForm = function PetFormComponent() {
                     'health',
                     values.health,
                     handleChange,
+                    isSubmitting,
                   )}
                 </FormGroup>
               </FormControl>
@@ -261,14 +272,17 @@ const PetForm = function PetFormComponent() {
                 variant="outlined"
                 multiline
                 rows={5}
+                disabled={isSubmitting}
               />
 
-              <PetFormImageInput
-                images={values.images}
-                setFieldValue={setFieldValue}
-              />
+              <PetFormImageInput />
 
-              <Button type="submit" variant="contained" color="primary">
+              <Button
+                type="submit"
+                variant="contained"
+                color="primary"
+                disabled={isSubmitting}
+              >
                 {location.pathname.match(editPathPattern) ? 'Save' : 'Create'}
               </Button>
             </Stack>
