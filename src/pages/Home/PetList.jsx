@@ -54,7 +54,7 @@ const PetList = function PetListComponent() {
 
         <Grid container spacing={2} sx={{ mb: 3 }}>
           {data.petList?.docs.map((pet) => (
-            <Grid key={pet._id} size={{ xs: 12 }}>
+            <Grid key={pet._id} size={{ xs: 12, sm: 6, md: 4 }}>
               <Link
                 to={`/pet/${pet._id}`}
                 component={RouterLink}

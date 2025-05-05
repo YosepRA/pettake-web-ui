@@ -102,7 +102,7 @@ const ListControlFilter = function ListControlFilterComponent({
         }}
         sx={{
           '& .MuiPopover-paper': {
-            width: 1,
+            width: { xs: 1, sm: 420 },
             maxHeight: 360,
           },
         }}

@@ -104,6 +104,10 @@ const PetForm = function PetFormComponent() {
     return undefined;
   };
 
+  const handleFormCancel = () => {
+    navigate('/user/pet');
+  };
+
   /* ========== Component Buildup ========== */
 
   const ageOptions = petFormHelpers.createSelectOptions(petInputData.ages);
@@ -284,6 +288,16 @@ const PetForm = function PetFormComponent() {
                 disabled={isSubmitting}
               >
                 {location.pathname.match(editPathPattern) ? 'Save' : 'Create'}
+              </Button>
+
+              <Button
+                type="button"
+                variant="outlined"
+                color="primary"
+                onClick={handleFormCancel}
+                disabled={isSubmitting}
+              >
+                Cancel
               </Button>
             </Stack>
           </Form>

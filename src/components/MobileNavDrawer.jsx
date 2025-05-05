@@ -71,7 +71,7 @@ const MobileNavDrawer = function MobileNavDrawerComponent() {
   };
 
   return (
-    <Box>
+    <Box sx={{ display: { md: 'none' } }}>
       <Button
         onClick={toggleDrawer(true)}
         sx={{

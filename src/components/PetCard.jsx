@@ -10,7 +10,7 @@ import Link from '@mui/material/Link';
 
 const PetCard = function PetCardComponent({ pet }) {
   return (
-    <Card sx={{ width: 1, maxWidth: 345 }}>
+    <Card sx={{ width: 1, maxWidth: { xs: 345, md: 'none' } }}>
       <CardMedia
         sx={{ height: 240 }}
         image={
