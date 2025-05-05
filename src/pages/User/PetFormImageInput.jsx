@@ -31,7 +31,9 @@ const PetFormImageInput = function PetFormImageInputComponent() {
     return () => {
       const blobImages = images.filter((img) => img.url.startsWith('blob:'));
 
-      petFormHelpers.cleanBlobImages(blobImages);
+      if (blobImages.length > 0) {
+        petFormHelpers.cleanBlobImages(blobImages);
+      }
     };
   }, [images]);
 

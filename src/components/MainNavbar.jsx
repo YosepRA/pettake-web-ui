@@ -7,13 +7,22 @@ import Typography from '@mui/material/Typography';
 import Link from '@mui/material/Link';
 import Button from '@mui/material/Button';
 
+import { useAuthentication } from '@Features/user/AuthenticationContext.jsx';
+
 import MobileNavDrawer from './MobileNavDrawer.jsx';
 
 const MainNavbar = function MainNavbarComponent() {
+  const { isLoggedIn, logout } = useAuthentication();
+
   return (
     <Box component="nav">
       <AppBar position="static">
-        <Toolbar sx={{ columnGap: 2, justifyContent: 'space-between' }}>
+        <Toolbar
+          sx={{
+            justifyContent: 'space-between',
+            py: { md: 1 },
+          }}
+        >
           <Link to="/" component={RouterLink}>
             <Typography
               variant="h6"
@@ -27,8 +36,10 @@ const MainNavbar = function MainNavbarComponent() {
             </Typography>
           </Link>
 
-          {/* <Box
+          <Box
             sx={{
+              display: { xs: 'none', md: 'flex' },
+              flex: 1,
               '& .MuiTypography-root': {
                 display: 'inline-block',
 
@@ -38,21 +49,42 @@ const MainNavbar = function MainNavbarComponent() {
               },
             }}
           >
-            <Link
-              to="/user"
-              component={RouterLink}
-              sx={{ color: 'inherit', textDecoration: 'none' }}
-            >
-              <Typography>User</Typography>
-            </Link>
-            <Link
-              to="/user/settings"
-              component={RouterLink}
-              sx={{ color: 'inherit', textDecoration: 'none' }}
-            >
-              <Typography>Settings</Typography>
-            </Link>
-          </Box> */}
+            <Box>
+              <Link
+                to="/"
+                component={RouterLink}
+                sx={{ color: 'inherit', textDecoration: 'none' }}
+              >
+                <Typography variant="body2">Home</Typography>
+              </Link>
+            </Box>
+
+            <Box>
+              <Link
+                to="/"
+                component={RouterLink}
+                sx={{
+                  display: isLoggedIn ? 'none' : 'inline-block',
+                  color: 'inherit',
+                  textDecoration: 'none',
+                }}
+              >
+                <Typography variant="body2">Login</Typography>
+              </Link>
+
+              <Link
+                to="/"
+                component={RouterLink}
+                sx={{
+                  display: isLoggedIn ? 'none' : 'inline-block',
+                  color: 'inherit',
+                  textDecoration: 'none',
+                }}
+              >
+                <Typography variant="body2">Register</Typography>
+              </Link>
+            </Box>
+          </Box>
 
           <MobileNavDrawer />
         </Toolbar>

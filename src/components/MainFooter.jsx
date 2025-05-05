@@ -14,7 +14,14 @@ const MainFooter = function MainFooterComponent() {
       }}
     >
       <Toolbar>
-        <Typography variant="h6" component="p">
+        <Typography
+          variant="h6"
+          component="p"
+          sx={{
+            fontFamily: 'Blueberry Regular',
+            color: 'primary.contrastText',
+          }}
+        >
           PetTake
         </Typography>
       </Toolbar>
