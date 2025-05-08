@@ -11,35 +11,9 @@ import ListItemText from '@mui/material/ListItemText';
 import Divider from '@mui/material/Divider';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
+import { navigationItems } from '@Data/index.js';
 import { useAuthentication } from '@Features/user/AuthenticationContext.jsx';
 import { promiseResolver } from '@Utils/index.js';
-
-const navigationItems = {
-  main: [
-    {
-      label: 'Home',
-      path: '/',
-    },
-  ],
-  user: {
-    guest: [
-      {
-        label: 'Login',
-        path: '/user/login',
-      },
-      {
-        label: 'Register',
-        path: '/user/register',
-      },
-    ],
-    registered: [
-      {
-        label: 'Dashboard',
-        path: '/user/pet',
-      },
-    ],
-  },
-};
 
 const MobileNavDrawer = function MobileNavDrawerComponent() {
   const [drawerOpen, setDrawerOpen] = useState(false);
