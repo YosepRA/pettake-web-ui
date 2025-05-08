@@ -52,7 +52,7 @@ const PetList = function PetListComponent() {
           <ListControl />
         </Box>
 
-        <Grid container spacing={2} sx={{ mb: 3 }}>
+        <Grid container spacing={2} sx={{ mb: { xs: 3, sm: 5 } }}>
           {data.petList?.docs.map((pet) => (
             <Grid key={pet._id} size={{ xs: 12, sm: 6, md: 4 }}>
               <Link

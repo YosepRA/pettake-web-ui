@@ -45,8 +45,9 @@ const PetDetails = function PetDetailsComponent() {
           <SwiperSlide key={img.url}>
             <Box
               sx={{
-                width: 1,
-                height: 200,
+                width: { xs: 1, sm: 460 },
+                height: { xs: 200, sm: 258 },
+                mx: 'auto',
                 borderRadius: 1,
               }}
             >
@@ -61,8 +62,12 @@ const PetDetails = function PetDetailsComponent() {
         ))}
       </Box>
 
-      <Grid container rowSpacing={{ xs: 2 }}>
-        <Grid size={{ xs: 12 }}>
+      <Grid
+        container
+        justifyContent={{ md: 'center' }}
+        rowSpacing={{ xs: 2, md: 4 }}
+      >
+        <Grid size={{ xs: 12, md: 10, lg: 8 }}>
           <Typography variant="h5" component="h1" sx={{ mb: 1 }}>
             {data.pet.name}
           </Typography>
@@ -72,7 +77,7 @@ const PetDetails = function PetDetailsComponent() {
           </Box>
         </Grid>
 
-        <Grid size={{ xs: 12 }}>
+        <Grid size={{ xs: 12, md: 10, lg: 8 }}>
           <Box sx={{ mb: 2 }}>
             <Typography
               variant="body1"

@@ -24,9 +24,9 @@ const Home = function HomeComponent() {
         component="section"
         className="hero"
         sx={{
-          mb: 3,
-          pt: 2,
-          pb: 4,
+          mb: { xs: 3, md: 5 },
+          pt: { xs: 2, md: 4 },
+          pb: { xs: 4, md: 6 },
           bgcolor: 'primary.main',
           color: 'primary.contrastText',
           textAlign: 'center',
