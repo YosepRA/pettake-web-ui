@@ -34,7 +34,7 @@ const MainNavbar = function MainNavbarComponent() {
 
   return (
     <Box component="nav">
-      <AppBar position="static">
+      <AppBar position="fixed" sx={{ boxShadow: 'none' }}>
         <Container sx={{ px: { xs: 0, sm: 0 } }}>
           <Toolbar
             sx={{

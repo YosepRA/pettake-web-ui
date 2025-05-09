@@ -66,7 +66,12 @@ const Register = function RegisterComponent() {
         <Formik initialValues={defaultValues} onSubmit={handleFormSubmit}>
           {({ values, handleChange, handleSubmit }) => (
             <Form onSubmit={handleSubmit}>
-              <Stack direction="column" alignItems="stretch" gap={2}>
+              <Stack
+                direction="column"
+                alignItems="stretch"
+                gap={2}
+                sx={{ maxWidth: 370, margin: '0 auto' }}
+              >
                 <TextField
                   id="username"
                   name="username"
@@ -125,7 +130,7 @@ const Register = function RegisterComponent() {
           )}
         </Formik>
 
-        <Typography sx={{ mt: 2, textAlign: 'center' }}>
+        <Typography variant="body2" sx={{ mt: 2, textAlign: 'center' }}>
           Already have an account? <Link to="../login">Login here.</Link>
         </Typography>
       </Container>

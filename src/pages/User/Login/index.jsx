@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router';
 import { Formik, Form } from 'formik';
 import Typography from '@mui/material/Typography';
@@ -47,32 +47,36 @@ const Login = function LoginComponent() {
 
   return (
     <Stack>
-      <Container
-        sx={{ mb: 3, bgcolor: 'primary.main', color: 'primary.contrastText' }}
+      <Stack
+        direction="column"
+        justifyContent="center"
+        alignItems="center"
+        component="section"
+        gap={1}
+        sx={{
+          pt: 4,
+          pb: 6,
+          mb: { xs: 3, sm: 4 },
+          bgcolor: 'primary.main',
+          color: 'primary.contrastText',
+        }}
       >
-        <Stack
-          direction="column"
-          justifyContent="center"
-          alignItems="center"
-          component="section"
-          gap={1}
-          sx={{
-            pt: 4,
-            pb: 6,
-          }}
-        >
-          <Typography variant="h5" component="h1" sx={{ color: 'inherit' }}>
-            User Login
-          </Typography>
-          <Typography variant="subtitle2">Log into your account</Typography>
-        </Stack>
-      </Container>
+        <Typography variant="h5" component="h1" sx={{ color: 'inherit' }}>
+          User Login
+        </Typography>
+        <Typography variant="subtitle2">Log into your account</Typography>
+      </Stack>
 
       <Container>
         <Formik initialValues={defaultValues} onSubmit={handleFormSubmit}>
           {({ values, handleChange, handleSubmit }) => (
             <Form onSubmit={handleSubmit}>
-              <Stack direction="column" alignItems="stretch" gap={2}>
+              <Stack
+                direction="column"
+                alignItems="stretch"
+                gap={2}
+                sx={{ maxWidth: 370, margin: '0 auto' }}
+              >
                 <TextField
                   id="username"
                   name="username"
@@ -102,7 +106,7 @@ const Login = function LoginComponent() {
           )}
         </Formik>
 
-        <Typography sx={{ mt: 2, textAlign: 'center' }}>
+        <Typography variant="body2" sx={{ mt: 2, textAlign: 'center' }}>
           You don&apos;t have an account?{' '}
           <Link to="../register">Register here.</Link>
         </Typography>

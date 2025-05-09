@@ -5,11 +5,14 @@ import Box from '@mui/material/Box';
 
 import MainNavbar from './MainNavbar.jsx';
 import MainFooter from './MainFooter.jsx';
+import NavbarOffset from './styled/NavbarOffset.jsx';
 
 const IndexLayout = function IndexLayoutComponent() {
   return (
     <>
       <MainNavbar />
+
+      <NavbarOffset />
 
       <Box
         component="main"
