@@ -43,12 +43,12 @@ const UserPetList = function UserPetListComponent() {
   if (error) return <Typography>An error has occurred.</Typography>;
 
   return (
-    <Container sx={{ pt: 2 }}>
+    <Container sx={{ pt: { xs: 2, md: 4 } }}>
       <Stack
         direction="row"
         justifyContent="space-between"
         component="section"
-        sx={{ mb: 1 }}
+        sx={{ mb: 2 }}
       >
         <ListControl />
 
@@ -62,9 +62,9 @@ const UserPetList = function UserPetListComponent() {
         </Button>
       </Stack>
 
-      <Grid container spacing={2} sx={{ mb: 3 }}>
+      <Grid container spacing={2} sx={{ mb: { xs: 3, sm: 5 } }}>
         {data.userPetList?.docs.map((pet) => (
-          <Grid key={pet._id} size={{ xs: 12 }}>
+          <Grid key={pet._id} size={{ xs: 12, sm: 6, md: 4 }}>
             <Link
               to={`${pet._id}/edit`}
               component={RouterLink}

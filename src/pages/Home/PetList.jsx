@@ -48,7 +48,7 @@ const PetList = function PetListComponent() {
           Find Your Pet
         </Typography>
 
-        <Box sx={{ mb: 1 }}>
+        <Box sx={{ mb: 2 }}>
           <ListControl />
         </Box>
 
