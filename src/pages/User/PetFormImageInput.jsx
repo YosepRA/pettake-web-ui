@@ -3,6 +3,7 @@ import { useFormikContext } from 'formik';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid2';
 
 import pet from '@Features/pet/index.js';
 import image from '@Features/image/index.js';
@@ -76,32 +77,39 @@ const PetFormImageInput = function PetFormImageInputComponent() {
 
   return (
     <>
-      <Button
-        component="label"
-        role={undefined}
-        variant="contained"
-        tabIndex={-1}
-        disabled={isSubmitting}
-      >
-        Upload Images
-        <VisuallyHiddenInput
-          type="file"
-          onChange={handleChange}
-          multiple
-          accept="image/*"
-          ref={inputRef}
-        />
-      </Button>
-
       {images.length > 0 && (
-        <Box component="ul" sx={{ listStyle: 'none', pl: 0 }}>
-          {images.map((image) => (
-            <PetFormImagePreview
-              key={image.url}
-              image={image}
-              handleDelete={handleDelete}
+        <Box sx={{ listStyle: 'none', m: 0, pl: 0 }}>
+          <Grid
+            container
+            columnSpacing={{ xs: 0, sm: 1, md: 2 }}
+            sx={{ mb: 2 }}
+          >
+            {images.map((image) => (
+              <PetFormImagePreview
+                key={image.url}
+                image={image}
+                handleDelete={handleDelete}
+              />
+            ))}
+          </Grid>
+
+          <Button
+            component="label"
+            role={undefined}
+            variant="contained"
+            tabIndex={-1}
+            disabled={isSubmitting}
+            sx={{ width: 1 }}
+          >
+            Upload Images
+            <VisuallyHiddenInput
+              type="file"
+              onChange={handleChange}
+              multiple
+              accept="image/*"
+              ref={inputRef}
             />
-          ))}
+          </Button>
         </Box>
       )}
     </>
