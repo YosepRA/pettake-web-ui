@@ -5,7 +5,7 @@ import { Formik, Form } from 'formik';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Stack from '@mui/material/Stack';
-import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid2';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import FormControl from '@mui/material/FormControl';
@@ -156,150 +156,188 @@ const PetForm = function PetFormComponent() {
       >
         {({ values, handleChange, handleSubmit, isSubmitting }) => (
           <Form onSubmit={handleSubmit}>
-            <Stack direction="column" alignItems="stretch" rowGap={2}>
-              <TextField
-                id="name"
-                name="name"
-                value={values.name}
-                onChange={handleChange}
-                label="Name"
-                variant="outlined"
-                disabled={isSubmitting}
-              />
-
-              <TextField
-                id="breed"
-                name="breed"
-                value={values.breed}
-                onChange={handleChange}
-                label="Breed"
-                variant="outlined"
-                disabled={isSubmitting}
-              />
-
-              <FormControl fullWidth>
-                <InputLabel id="age">Age</InputLabel>
-
-                <Select
-                  labelId="age"
-                  id="age"
-                  name="age"
-                  value={values.age}
-                  label="Age"
+            <Grid
+              container
+              rowSpacing={{ xs: 2, md: 2 }}
+              columnSpacing={{ xs: 0, md: 2 }}
+              sx={{
+                width: { sm: '80%', md: '70%', lg: '60%' },
+                maxWidth: { sm: 480, md: 'none' },
+                margin: '0 auto',
+              }}
+            >
+              <Grid size={{ xs: 12 }}>
+                <TextField
+                  id="name"
+                  name="name"
+                  value={values.name}
                   onChange={handleChange}
+                  label="Name"
+                  variant="outlined"
                   disabled={isSubmitting}
-                >
-                  {ageOptions}
-                </Select>
-              </FormControl>
+                  sx={{ width: 1 }}
+                />
+              </Grid>
 
-              <FormControl fullWidth>
-                <InputLabel id="gender">Gender</InputLabel>
-
-                <Select
-                  labelId="gender"
-                  id="gender"
-                  name="gender"
-                  value={values.gender}
-                  label="Gender"
+              <Grid size={{ xs: 12, md: 6 }}>
+                <TextField
+                  id="breed"
+                  name="breed"
+                  value={values.breed}
                   onChange={handleChange}
+                  label="Breed"
+                  variant="outlined"
                   disabled={isSubmitting}
-                >
-                  {genderOptions}
-                </Select>
-              </FormControl>
+                  sx={{ width: 1 }}
+                />
+              </Grid>
 
-              <FormControl fullWidth>
-                <InputLabel id="coatLength">Coat Length</InputLabel>
+              <Grid size={{ xs: 12, md: 6 }}>
+                <FormControl fullWidth>
+                  <InputLabel id="age">Age</InputLabel>
 
-                <Select
-                  labelId="coatLength"
-                  id="coatLength"
-                  name="coatLength"
-                  value={values.coatLength}
-                  label="Coat Length"
+                  <Select
+                    labelId="age"
+                    id="age"
+                    name="age"
+                    value={values.age}
+                    label="Age"
+                    onChange={handleChange}
+                    disabled={isSubmitting}
+                  >
+                    {ageOptions}
+                  </Select>
+                </FormControl>
+              </Grid>
+
+              <Grid size={{ xs: 12, md: 6 }}>
+                <FormControl fullWidth>
+                  <InputLabel id="gender">Gender</InputLabel>
+
+                  <Select
+                    labelId="gender"
+                    id="gender"
+                    name="gender"
+                    value={values.gender}
+                    label="Gender"
+                    onChange={handleChange}
+                    disabled={isSubmitting}
+                  >
+                    {genderOptions}
+                  </Select>
+                </FormControl>
+              </Grid>
+
+              <Grid size={{ xs: 12, md: 6 }}>
+                <FormControl fullWidth>
+                  <InputLabel id="coatLength">Coat Length</InputLabel>
+
+                  <Select
+                    labelId="coatLength"
+                    id="coatLength"
+                    name="coatLength"
+                    value={values.coatLength}
+                    label="Coat Length"
+                    onChange={handleChange}
+                    disabled={isSubmitting}
+                  >
+                    {coatLengthOptions}
+                  </Select>
+                </FormControl>
+              </Grid>
+
+              <Grid size={{ xs: 12, sm: 6, md: 4 }}>
+                <FormControl fullWidth component="fieldset">
+                  <FormLabel component="legend">Prefer Home With</FormLabel>
+
+                  <FormGroup>
+                    {petFormHelpers.createMultipleCheckboxInput(
+                      petInputData.preferHomes,
+                      'preferHomeWith',
+                      values.preferHomeWith,
+                      handleChange,
+                      isSubmitting,
+                    )}
+                  </FormGroup>
+                </FormControl>
+              </Grid>
+
+              <Grid size={{ xs: 12, sm: 6, md: 4 }}>
+                <FormControl fullWidth component="fieldset">
+                  <FormLabel component="legend">Prefer Home Without</FormLabel>
+
+                  <FormGroup>
+                    {petFormHelpers.createMultipleCheckboxInput(
+                      petInputData.preferHomes,
+                      'preferHomeWithout',
+                      values.preferHomeWithout,
+                      handleChange,
+                      isSubmitting,
+                    )}
+                  </FormGroup>
+                </FormControl>
+              </Grid>
+
+              <Grid size={{ xs: 12, sm: 6, md: 4 }}>
+                <FormControl fullWidth component="fieldset">
+                  <FormLabel component="legend">Health</FormLabel>
+
+                  <FormGroup>
+                    {petFormHelpers.createMultipleCheckboxInput(
+                      petInputData.healths,
+                      'health',
+                      values.health,
+                      handleChange,
+                      isSubmitting,
+                    )}
+                  </FormGroup>
+                </FormControl>
+              </Grid>
+
+              <Grid size={{ xs: 12 }}>
+                <TextField
+                  id="description"
+                  name="description"
+                  value={values.description}
                   onChange={handleChange}
+                  label="Description"
+                  variant="outlined"
+                  multiline
+                  rows={5}
                   disabled={isSubmitting}
-                >
-                  {coatLengthOptions}
-                </Select>
-              </FormControl>
+                  sx={{ width: 1 }}
+                />
+              </Grid>
 
-              <FormControl fullWidth component="fieldset">
-                <FormLabel component="legend">Prefer Home With</FormLabel>
+              <Grid size={{ xs: 12 }}>
+                <PetFormImageInput />
+              </Grid>
 
-                <FormGroup>
-                  {petFormHelpers.createMultipleCheckboxInput(
-                    petInputData.preferHomes,
-                    'preferHomeWith',
-                    values.preferHomeWith,
-                    handleChange,
-                    isSubmitting,
-                  )}
-                </FormGroup>
-              </FormControl>
+              <Grid size={{ xs: 12 }}>
+                <Stack flexDirection="column" spacing={2}>
+                  <Button
+                    type="submit"
+                    variant="contained"
+                    color="primary"
+                    disabled={isSubmitting}
+                  >
+                    {location.pathname.match(editPathPattern)
+                      ? 'Save'
+                      : 'Create'}
+                  </Button>
 
-              <FormControl fullWidth component="fieldset">
-                <FormLabel component="legend">Prefer Home Without</FormLabel>
-
-                <FormGroup>
-                  {petFormHelpers.createMultipleCheckboxInput(
-                    petInputData.preferHomes,
-                    'preferHomeWithout',
-                    values.preferHomeWithout,
-                    handleChange,
-                    isSubmitting,
-                  )}
-                </FormGroup>
-              </FormControl>
-
-              <FormControl fullWidth component="fieldset">
-                <FormLabel component="legend">Health</FormLabel>
-
-                <FormGroup>
-                  {petFormHelpers.createMultipleCheckboxInput(
-                    petInputData.healths,
-                    'health',
-                    values.health,
-                    handleChange,
-                    isSubmitting,
-                  )}
-                </FormGroup>
-              </FormControl>
-
-              <TextField
-                id="description"
-                name="description"
-                value={values.description}
-                onChange={handleChange}
-                label="Description"
-                variant="outlined"
-                multiline
-                rows={5}
-                disabled={isSubmitting}
-              />
-
-              <PetFormImageInput />
-
-              <Button
-                type="submit"
-                variant="contained"
-                color="primary"
-                disabled={isSubmitting}
-              >
-                {location.pathname.match(editPathPattern) ? 'Save' : 'Create'}
-              </Button>
-
-              <Button
-                type="button"
-                variant="outlined"
-                color="primary"
-                onClick={handleFormCancel}
-                disabled={isSubmitting}
-              >
-                Cancel
-              </Button>
-            </Stack>
+                  <Button
+                    type="button"
+                    variant="outlined"
+                    color="primary"
+                    onClick={handleFormCancel}
+                    disabled={isSubmitting}
+                  >
+                    Cancel
+                  </Button>
+                </Stack>
+              </Grid>
+            </Grid>
           </Form>
         )}
       </Formik>
