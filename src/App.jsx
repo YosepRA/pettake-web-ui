@@ -33,6 +33,7 @@ const App = function AppComponent() {
                 <Route path="new" element={<PetForm />} />
                 <Route path=":id/edit" element={<PetForm />} />
               </Route>
+
               <Route path="settings" element={<UserSettings />} />
             </Route>
 
