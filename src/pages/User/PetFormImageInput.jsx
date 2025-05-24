@@ -82,7 +82,7 @@ const PetFormImageInput = function PetFormImageInputComponent() {
           <Grid
             container
             columnSpacing={{ xs: 0, sm: 1, md: 2 }}
-            sx={{ mb: 2 }}
+            // sx={{ mb: 2 }}
           >
             {images.map((image) => (
               <PetFormImagePreview
@@ -99,7 +99,7 @@ const PetFormImageInput = function PetFormImageInputComponent() {
             variant="contained"
             tabIndex={-1}
             disabled={isSubmitting}
-            sx={{ width: 1 }}
+            sx={{ width: { xs: 1, sm: 'auto' } }}
           >
             Upload Images
             <VisuallyHiddenInput

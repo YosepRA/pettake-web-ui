@@ -314,12 +314,13 @@ const PetForm = function PetFormComponent() {
               </Grid>
 
               <Grid size={{ xs: 12 }}>
-                <Stack flexDirection="column" spacing={2}>
+                <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
                   <Button
                     type="submit"
                     variant="contained"
                     color="primary"
                     disabled={isSubmitting}
+                    sx={{ width: { sm: 100 } }}
                   >
                     {location.pathname.match(editPathPattern)
                       ? 'Save'
@@ -332,6 +333,7 @@ const PetForm = function PetFormComponent() {
                     color="primary"
                     onClick={handleFormCancel}
                     disabled={isSubmitting}
+                    sx={{ width: { sm: 100 } }}
                   >
                     Cancel
                   </Button>

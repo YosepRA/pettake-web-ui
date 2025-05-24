@@ -14,6 +14,8 @@ import ListControl from '@Components/ListControl.jsx';
 import PetCard from '@Components/PetCard.jsx';
 import Pagination from '@Components/Pagination.jsx';
 
+import UserNavigation from '../UserNavigation.jsx';
+
 const {
   graphql: { queries },
 } = pet;
@@ -43,7 +45,10 @@ const UserPetList = function UserPetListComponent() {
   if (error) return <Typography>An error has occurred.</Typography>;
 
   return (
-    <Container sx={{ pt: { xs: 2, md: 4 } }}>
+    // <Container sx={{ pt: { xs: 2, md: 4 } }}></Container>
+    <Container sx={{ pt: { sm: 1, md: 2 } }}>
+      <UserNavigation />
+
       <Stack
         direction="row"
         justifyContent="space-between"
