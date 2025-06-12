@@ -1,3 +1,4 @@
-import pettakeRESTClient from './client.js';
+import axiosClient from './axios-client.js';
+import queryClient from './react-query-client.js';
 
-export default pettakeRESTClient;
+export { axiosClient, queryClient };

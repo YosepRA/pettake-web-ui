@@ -1,4 +1,4 @@
-import client from '@Services/pettake-rest-server/index.js';
+import { axiosClient as client } from '@Services/pettake-rest-server/index.js';
 
 const imageAPI = {
   async upload(images) {
