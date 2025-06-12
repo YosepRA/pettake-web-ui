@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
 import { Formik, Form } from 'formik';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
@@ -6,6 +7,10 @@ import Stack from '@mui/material/Stack';
 import Grid from '@mui/material/Grid2';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
+
+import user from '@Features/user/index.js';
+
+const { api: userAPI } = user;
 
 const defaultValues = {
   username: 'BigJoe',
@@ -16,6 +21,10 @@ const defaultValues = {
 };
 
 const UserProfileSetting = function UserProfileSettingComponent() {
+  const { data, isPending, isError } = useQuery({
+    queryKey: ['user-profile'],
+    queryFn: userAPI.getUserProfile,
+  });
   const [mode, setMode] = useState('show');
 
   const handleEditClick = () => {
@@ -32,12 +41,16 @@ const UserProfileSetting = function UserProfileSettingComponent() {
     setMode('show');
   };
 
+  if (isPending) return <Typography>Loading...</Typography>;
+  if (isError) return <Typography>An error has occurred.</Typography>;
+
+  const initialValues = data ? data.user : defaultValues;
+
   return (
     <Box component="section" sx={{ mb: { xs: 5 } }}>
       <Typography variant="h6" component="h2" sx={{ mb: 1 }}>
         User Profile
       </Typography>
-
       {mode === 'show' && (
         <>
           <Box sx={{ mb: 1 }}>
@@ -46,7 +59,7 @@ const UserProfileSetting = function UserProfileSettingComponent() {
                 <Typography>Username</Typography>
               </Grid>
               <Grid size={{ xs: 9 }}>
-                <Typography>: BigJoe</Typography>
+                <Typography>: {data?.user.username}</Typography>
               </Grid>
             </Grid>
             <Grid container spacing={2}>
@@ -54,7 +67,7 @@ const UserProfileSetting = function UserProfileSettingComponent() {
                 <Typography>Email</Typography>
               </Grid>
               <Grid size={{ xs: 9 }}>
-                <Typography>: bigjoe@mail.com</Typography>
+                <Typography>: {data?.user.email}</Typography>
               </Grid>
             </Grid>
             <Grid container spacing={2}>
@@ -62,7 +75,7 @@ const UserProfileSetting = function UserProfileSettingComponent() {
                 <Typography>Name</Typography>
               </Grid>
               <Grid size={{ xs: 9 }}>
-                <Typography>: John Smith</Typography>
+                <Typography>: {data?.user.name}</Typography>
               </Grid>
             </Grid>
             <Grid container spacing={2}>
@@ -70,7 +83,7 @@ const UserProfileSetting = function UserProfileSettingComponent() {
                 <Typography>Phone</Typography>
               </Grid>
               <Grid size={{ xs: 9 }}>
-                <Typography>: +1 1234 8484</Typography>
+                <Typography>: {data?.user.phone}</Typography>
               </Grid>
             </Grid>
             <Grid container spacing={2}>
@@ -78,7 +91,7 @@ const UserProfileSetting = function UserProfileSettingComponent() {
                 <Typography>Address</Typography>
               </Grid>
               <Grid size={{ xs: 9 }}>
-                <Typography>: 3434 Bubby Drive Taylor, TX 76574</Typography>
+                <Typography>: {data?.user.address}</Typography>
               </Grid>
             </Grid>
           </Box>
@@ -93,7 +106,11 @@ const UserProfileSetting = function UserProfileSettingComponent() {
 
       {mode === 'edit' && (
         <>
-          <Formik initialValues={defaultValues} onSubmit={handleFormSubmit}>
+          <Formik
+            initialValues={initialValues}
+            onSubmit={handleFormSubmit}
+            enableReinitialize
+          >
             {({ values, handleChange, handleSubmit }) => (
               <Form onSubmit={handleSubmit}>
                 <Stack direction="column" spacing={2}>
