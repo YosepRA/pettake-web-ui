@@ -31,8 +31,8 @@ const userAPI = {
 
     return response.data;
   },
-  async changeUserPassword(data) {
-    const response = await client.post('/user/change-password', data);
+  async changeUserPassword(userUpdate) {
+    const response = await client.post('/user/change-password', userUpdate);
 
     return response.data;
   },

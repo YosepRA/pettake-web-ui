@@ -1,4 +1,5 @@
 import React from 'react';
+import { useMutation } from '@tanstack/react-query';
 import { Formik, Form } from 'formik';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
@@ -6,7 +7,10 @@ import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 
+import user from '@Features/user/index.js';
 import { includeObjectProperties } from '@Utils/index.js';
+
+const { api: userAPI } = user;
 
 const defaultValues = {
   oldPassword: '',
@@ -15,13 +19,32 @@ const defaultValues = {
 };
 
 const UserPasswordSetting = function UserPasswordSettingComponent() {
-  const handleFormSubmit = (values) => {
-    const submitValue = includeObjectProperties(values, [
+  const changeUserPassword = useMutation({
+    mutationFn: userAPI.changeUserPassword,
+  });
+
+  const handleFormSubmit = (values, { resetForm }) => {
+    const userUpdateData = includeObjectProperties(values, [
       'oldPassword',
       'newPassword',
     ]);
 
-    console.log(JSON.stringify(submitValue, null, 2));
+    changeUserPassword.mutate(userUpdateData, {
+      onSuccess: (data) => {
+        if (data.status === 'error') {
+          console.error('User password update error:', data.message);
+
+          return undefined;
+        }
+
+        resetForm();
+
+        return undefined;
+      },
+      onError: (error) => {
+        console.error('User password update error.', error);
+      },
+    });
   };
 
   return (
