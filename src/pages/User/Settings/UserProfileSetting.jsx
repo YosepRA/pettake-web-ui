@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Formik, Form } from 'formik';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
@@ -9,6 +9,7 @@ import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 
 import user from '@Features/user/index.js';
+import { includeObjectProperties } from '@Utils/index.js';
 
 const { api: userAPI } = user;
 
@@ -21,11 +22,36 @@ const defaultValues = {
 };
 
 const UserProfileSetting = function UserProfileSettingComponent() {
+  const [mode, setMode] = useState('show');
+
+  const queryClient = useQueryClient();
+
   const { data, isPending, isError } = useQuery({
     queryKey: ['user-profile'],
     queryFn: userAPI.getUserProfile,
   });
-  const [mode, setMode] = useState('show');
+
+  const changeUserProfile = useMutation({
+    mutationFn: userAPI.changeUserProfile,
+    onSuccess: (data) => {
+      if (data.status === 'error') {
+        console.error('User profile update error:', data.message);
+
+        return undefined;
+      }
+
+      // Invalidate query ['user-profile'].
+      queryClient.invalidateQueries(['user-profile']);
+
+      // Go back to `show` mode.
+      setMode('show');
+
+      return undefined;
+    },
+    onError: (error) => {
+      console.error('User profile update error.', error);
+    },
+  });
 
   const handleEditClick = () => {
     setMode('edit');
@@ -36,9 +62,13 @@ const UserProfileSetting = function UserProfileSettingComponent() {
   };
 
   const handleFormSubmit = (values) => {
-    console.log(JSON.stringify(values, null, 2));
+    const userUpdateData = includeObjectProperties(values, [
+      'name',
+      'phone',
+      'address',
+    ]);
 
-    setMode('show');
+    changeUserProfile.mutate(userUpdateData);
   };
 
   if (isPending) return <Typography>Loading...</Typography>;
