@@ -2,8 +2,28 @@ import { gql } from '@apollo/client';
 
 const petQueries = {
   GET_PET_LIST: gql`
-    query GetPetList($page: Int!, $sort: String!) {
-      petList(page: $page, sort: $sort) {
+    query GetPetList(
+      $page: Int!
+      $sort: String!
+      $breed: String
+      $age: String
+      $gender: String
+      $coatLength: String
+      $preferHomeWith: [String]
+      $preferHomeWithout: [String]
+      $health: [String]
+    ) {
+      petList(
+        page: $page
+        sort: $sort
+        breed: $breed
+        age: $age
+        gender: $gender
+        coatLength: $coatLength
+        preferHomeWith: $preferHomeWith
+        preferHomeWithout: $preferHomeWithout
+        health: $health
+      ) {
         docs {
           _id
           name
@@ -41,8 +61,28 @@ const petQueries = {
     }
   `,
   GET_USER_PET_LIST: gql`
-    query GetUserPetList($page: Int!, $sort: String!) {
-      userPetList(page: $page, sort: $sort) {
+    query GetUserPetList(
+      $page: Int!
+      $sort: String!
+      $breed: String
+      $age: String
+      $gender: String
+      $coatLength: String
+      $preferHomeWith: [String]
+      $preferHomeWithout: [String]
+      $health: [String]
+    ) {
+      userPetList(
+        page: $page
+        sort: $sort
+        breed: $breed
+        age: $age
+        gender: $gender
+        coatLength: $coatLength
+        preferHomeWith: $preferHomeWith
+        preferHomeWithout: $preferHomeWithout
+        health: $health
+      ) {
         docs {
           _id
           name

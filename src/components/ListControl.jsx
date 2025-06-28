@@ -3,41 +3,17 @@ import { useSearchParams } from 'react-router';
 import { Formik, Form } from 'formik';
 import Stack from '@mui/material/Stack';
 
+import { listControlDefaultValues } from '@Data/index.js';
+import { parseListFiltersSearch } from '@Utils/index.js';
+
 import ListControlFilter from './ListControlFilter.jsx';
 import ListControlSort from './ListControlSort.jsx';
 
-const defaultValues = {
-  breed: '',
-  age: '',
-  gender: '',
-  coatLength: '',
-  preferHomeWith: [],
-  preferHomeWithout: [],
-  health: [],
-  sort: '-createdAt',
-};
-
 function createInitialValues(defaultValuesParams, searchParams) {
-  const parsedSearch = {};
-  const valueKeys = Object.keys(defaultValuesParams);
-
-  for (const [key, value] of searchParams.entries()) {
-    // If search params belong to list control parameter, then include it to
-    // the new object.
-    if (valueKeys.includes(key)) {
-      // If a search field contains multiple values, then turn it into array.
-      if (Array.isArray(defaultValuesParams[key])) {
-        parsedSearch[key] =
-          parsedSearch[key] !== undefined
-            ? parsedSearch[key].concat(value)
-            : [value];
-
-        continue;
-      }
-
-      parsedSearch[key] = value;
-    }
-  }
+  const parsedSearch = parseListFiltersSearch(
+    defaultValuesParams,
+    searchParams,
+  );
 
   const initialValues = { ...defaultValuesParams, ...parsedSearch };
 
@@ -63,7 +39,10 @@ const ListControl = function ListControlComponent() {
     setSearchParams(search);
   };
 
-  const initialValues = createInitialValues(defaultValues, searchParams);
+  const initialValues = createInitialValues(
+    listControlDefaultValues,
+    searchParams,
+  );
 
   return (
     <Formik
