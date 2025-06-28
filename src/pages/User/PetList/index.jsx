@@ -13,6 +13,7 @@ import pet from '@Features/pet/index.js';
 import ListControl from '@Components/ListControl.jsx';
 import PetCard from '@Components/PetCard.jsx';
 import Pagination from '@Components/Pagination.jsx';
+import useParseListControlSearch from '@Components/hooks/useParseListControlSearch.jsx';
 
 import UserNavigation from '../UserNavigation.jsx';
 
@@ -22,13 +23,16 @@ const {
 
 const UserPetList = function UserPetListComponent() {
   const [searchParams, setSearchParams] = useSearchParams();
+  const parsedSearch = useParseListControlSearch();
+
+  const queryVariables = {
+    page: searchParams.get('page') ? parseInt(searchParams.get('page'), 10) : 1,
+    sort: searchParams.get('sort') || '-createdAt',
+    ...parsedSearch,
+  };
+
   const { data, loading, error } = useQuery(queries.GET_USER_PET_LIST, {
-    variables: {
-      page: searchParams.get('page')
-        ? parseInt(searchParams.get('page'), 10)
-        : 1,
-      sort: searchParams.get('sort') || '-createdAt',
-    },
+    variables: queryVariables,
   });
 
   useEffect(() => {
