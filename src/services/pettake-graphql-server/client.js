@@ -1,7 +1,9 @@
 import { ApolloClient, InMemoryCache } from '@apollo/client';
 
+const baseURL = import.meta.env.VITE_PETTAKE_GRAPHQL_SERVER_BASE_URL;
+
 const apolloClientConfig = {
-  uri: 'http://localhost:3000/graphql',
+  uri: baseURL,
   cache: new InMemoryCache(),
   credentials: 'include',
 };
