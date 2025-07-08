@@ -1,7 +1,9 @@
 import axios from 'axios';
 
+const baseURL = import.meta.env.VITE_PETTAKE_SERVER_BASE_URL;
+
 const axiosClientConfig = {
-  baseURL: 'http://localhost:3000',
+  baseURL,
   withCredentials: true,
 };
 
