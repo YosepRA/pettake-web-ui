@@ -17,7 +17,7 @@ const App = function AppComponent() {
     <>
       <CssBaseline />
 
-      <BrowserRouter>
+      <BrowserRouter basename="/pettake-web-ui">
         <Routes>
           <Route element={<IndexLayout />}>
             <Route index element={<Home />} />

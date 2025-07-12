@@ -41,26 +41,25 @@ const Register = function RegisterComponent() {
 
   return (
     <Stack>
-      <Container
-        sx={{ mb: 3, bgcolor: 'primary.main', color: 'primary.contrastText' }}
+      <Stack
+        direction="column"
+        justifyContent="center"
+        alignItems="center"
+        component="section"
+        gap={1}
+        sx={{
+          pt: 4,
+          pb: 6,
+          mb: { xs: 3, sm: 4 },
+          bgcolor: 'primary.main',
+          color: 'primary.contrastText',
+        }}
       >
-        <Stack
-          direction="column"
-          justifyContent="center"
-          alignItems="center"
-          component="section"
-          gap={1}
-          sx={{
-            pt: 4,
-            pb: 6,
-          }}
-        >
-          <Typography variant="h5" component="h1" sx={{ color: 'inherit' }}>
-            User Registration
-          </Typography>
-          <Typography variant="subtitle2">Create a new user account</Typography>
-        </Stack>
-      </Container>
+        <Typography variant="h5" component="h1" sx={{ color: 'inherit' }}>
+          User Registration
+        </Typography>
+        <Typography variant="subtitle2">Create a new user account</Typography>
+      </Stack>
 
       <Container>
         <Formik initialValues={defaultValues} onSubmit={handleFormSubmit}>
